@@ -137,6 +137,14 @@ const properties = [
     area: "200 sqm",
     image: "/placeholder-property-5.jpg",
   },
+  {
+    title: "Shortlet In Owerri",
+    price: "$250,00",
+    beds: 2,
+    baths: 2,
+    area: "200 sqm",
+    image: "/placeholder-property-5.jpg",
+  },
 ];
 
 const Features = () => {
@@ -173,6 +181,50 @@ const Features = () => {
                   <p className="text-sm font-inter text-gray-600">
                     {stat.description}
                   </p>
+                </CardContent>
+              </Card>
+            </motion.div>
+          ))}
+        </div>
+
+        <motion.h3
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-2xl md:text-3xl font-playfair text-deep-navy-blue text-center mb-8"
+        >
+          Featured Properties
+        </motion.h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+          {properties.map((property, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: index * 0.2 }}
+            >
+              <Card className="bg-white/80 backdrop-blur-md border-none shadow-lg rounded-xl overflow-hidden hover:shadow-xl transition-shadow">
+                <CardContent className="p-0">
+                  <img
+                    src={property.image}
+                    alt={property.title}
+                    className="w-full h-56 object-cover"
+                  />
+                  <div className="p-4">
+                    <h4 className="text-lg font-poppins font-semibold text-deep-navy-blue mb-2">
+                      {property.title}
+                    </h4>
+                    <p className="text-xl font-playfair text-rich-gold mb-2">
+                      {property.price}
+                    </p>
+                    <p className="text-sm font-inter text-gray-600">
+                      {property.beds} Beds • {property.baths} Baths •{" "}
+                      {property.area}
+                    </p>
+                    <button className="mt-4 w-full bg-emerald-green text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors font-poppins">
+                      Explore Property
+                    </button>
+                  </div>
                 </CardContent>
               </Card>
             </motion.div>
@@ -295,49 +347,6 @@ const Features = () => {
         </div>
 
         {/* Property Showcase with Grid */}
-        <motion.h3
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-2xl md:text-3xl font-playfair text-deep-navy-blue text-center mb-8"
-        >
-          Featured Properties
-        </motion.h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {properties.map((property, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: index * 0.2 }}
-            >
-              <Card className="bg-white/80 backdrop-blur-md border-none shadow-lg rounded-xl overflow-hidden hover:shadow-xl transition-shadow">
-                <CardContent className="p-0">
-                  <img
-                    src={property.image}
-                    alt={property.title}
-                    className="w-full h-56 object-cover"
-                  />
-                  <div className="p-4">
-                    <h4 className="text-lg font-poppins font-semibold text-deep-navy-blue mb-2">
-                      {property.title}
-                    </h4>
-                    <p className="text-xl font-playfair text-rich-gold mb-2">
-                      {property.price}
-                    </p>
-                    <p className="text-sm font-inter text-gray-600">
-                      {property.beds} Beds • {property.baths} Baths •{" "}
-                      {property.area}
-                    </p>
-                    <button className="mt-4 w-full bg-emerald-green text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors font-poppins">
-                      Explore Property
-                    </button>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </div>
       </div>
     </section>
   );
