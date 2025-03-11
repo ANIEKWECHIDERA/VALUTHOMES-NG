@@ -1,9 +1,4 @@
-// app/about/page.tsx
-"use client";
-
-import Navbar from "@/components/home/NavBar";
-import Footer from "@/components/home/Footer";
-import { motion } from "framer-motion";
+// app/about/page.
 import { Card, CardContent } from "@/components/ui/card"; // ShadCN UI Card
 import { Button } from "@/components/ui/button"; // ShadCN UI Button
 // import { FaUsers } from "react-icons/fa"; // react-icons
@@ -29,40 +24,24 @@ const teamMembers = [
 export default function About() {
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar />
       <main className="flex-grow">
         {/* Hero Section */}
         <section className="relative h-[60vh] bg-cover bg-center">
           <div className="absolute inset-0 bg-deep-navy-blue opacity-60"></div>
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-center items-center text-center text-white">
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-4xl md:text-5xl font-playfair font-bold mb-4"
-            >
+            <h1 className="text-4xl md:text-5xl font-playfair font-bold mb-4">
               About ValutHomes NG
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-lg md:text-xl font-inter"
-            >
+            </h1>
+            <p className="text-lg md:text-xl font-inter">
               Connecting you to your dream property in Nigeria
-            </motion.p>
+            </p>
           </div>
         </section>
 
         {/* Mission Section */}
         <section className="py-16 bg-soft-gray">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-center"
-            >
+            <div className="text-center">
               <h2 className="text-3xl md:text-4xl font-playfair text-deep-navy-blue mb-6">
                 Our Mission
               </h2>
@@ -73,29 +52,19 @@ export default function About() {
                 transactions, and AI-driven recommendations to ensure a seamless
                 experience.
               </p>
-            </motion.div>
+            </div>
           </div>
         </section>
 
         {/* Team Section */}
         <section className="py-16 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-3xl md:text-4xl font-playfair text-deep-navy-blue text-center mb-12"
-            >
+            <h2 className="text-3xl md:text-4xl font-playfair text-deep-navy-blue text-center mb-12">
               Meet Our Team
-            </motion.h2>
+            </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {teamMembers.map((member, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: index * 0.2 }}
-                >
+                <div key={index}>
                   <Card className="bg-white/80 backdrop-blur-md border-none shadow-lg rounded-xl hover:shadow-xl transition-shadow">
                     <CardContent className="p-4 text-center">
                       <img
@@ -111,7 +80,7 @@ export default function About() {
                       </p>
                     </CardContent>
                   </Card>
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>
@@ -120,29 +89,18 @@ export default function About() {
         {/* CTA Section */}
         <section className="py-16 bg-soft-gray">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-3xl md:text-4xl font-playfair text-deep-navy-blue mb-6"
-            >
+            <h2 className="text-3xl md:text-4xl font-playfair text-deep-navy-blue mb-6">
               Ready to Find Your Dream Home?
-            </motion.h2>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-lg font-inter text-gray-600 mb-8"
-            >
+            </h2>
+            <p className="text-lg font-inter text-gray-600 mb-8">
               Start exploring properties with ValutHomes NG today.
-            </motion.p>
+            </p>
             <Button className="bg-emerald-green text-white px-6 py-3 rounded-md hover:bg-green-600 transition-colors font-poppins">
               Explore Properties
             </Button>
           </div>
         </section>
       </main>
-      <Footer />
     </div>
   );
 }

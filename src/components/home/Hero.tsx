@@ -42,7 +42,7 @@ const Hero = () => {
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.5 }}
           className="text-4xl md:text-6xl font-playfair font-bold mb-4"
         >
           Find Your Dream Home with Ease
@@ -50,7 +50,7 @@ const Hero = () => {
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
           className="text-lg md:text-xl font-inter mb-8"
         >
           Explore the best properties in Nigeria with ValutHomes NG
@@ -60,7 +60,7 @@ const Hero = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
           className="bg-white rounded-lg p-4 shadow-lg w-full max-w-2xl sm:space-x-4 flex items-center flex-wrap"
         >
           {/* Search Input */}

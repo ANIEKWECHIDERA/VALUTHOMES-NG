@@ -1,8 +1,6 @@
 // app/register/page.tsx
 "use client";
 
-import Navbar from "@/components/home/NavBar";
-import Footer from "@/components/home/Footer";
 import { motion } from "framer-motion";
 import {
   Card,
@@ -22,7 +20,6 @@ export default function Register() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar />
       <main className="flex-grow bg-soft-gray">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -105,7 +102,6 @@ export default function Register() {
           </Card>
         </motion.div>
       </main>
-      <Footer />
     </div>
   );
 }

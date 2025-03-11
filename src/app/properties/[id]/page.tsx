@@ -1,156 +1,181 @@
-// app/properties/[id]/page.tsx
-"use client";
-
-import Navbar from "@/components/home/NavBar";
-import Footer from "@/components/home/Footer";
-import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { FaBed, FaBath, FaRulerCombined, FaMapMarkerAlt } from "react-icons/fa";
+import {
+  FaMapMarkerAlt,
+  FaBed,
+  FaBath,
+  FaRulerCombined,
+  FaTag,
+  FaTools,
+} from "react-icons/fa";
+import Link from "next/link";
 
-const property = {
-  id: 1,
-  title: "Lagos Luxury Villa",
-  price: "$500,000",
-  beds: 4,
-  baths: 3,
-  area: "350 sqm",
-  location: "Lagos",
-  type: "House",
-  description:
-    "A stunning 4-bedroom villa in the heart of Lagos, featuring modern amenities, a spacious living area, and a private pool. Perfect for families or investors.",
-  images: [
-    "/placeholder-property-1.jpg",
-    "/placeholder-property-2.jpg",
-    "/placeholder-property-3.jpg",
-  ],
-  features: [
-    "Private Pool",
-    "Modern Kitchen",
-    "Spacious Garage",
-    "24/7 Security",
-  ],
-};
+// Static data (replace with API call in a real app)
+const properties = [
+  {
+    id: "1",
+    title: "Lagos Luxury Villa",
+    price: "$500,000",
+    monthlyRent: null,
+    beds: 4,
+    baths: 3,
+    area: "350 sqm",
+    location: "Lagos",
+    type: "Luxury",
+    condition: "Excellent",
+    status: "for-sale",
+    images: [
+      "/placeholder-property-1.jpg",
+      "/placeholder-property-2.jpg",
+      "/placeholder-property-3.jpg",
+    ],
+    description:
+      "This stunning luxury villa in the heart of Lagos offers unparalleled views and modern amenities. Perfect for families or investors looking for a high-end property.",
+    preferredClosingDate: "2025-04-15",
+  },
+  {
+    id: "2",
+    title: "Abuja Modern Apartment",
+    price: null,
+    monthlyRent: "$1,500/month",
+    beds: 3,
+    baths: 2,
+    area: "250 sqm",
+    location: "Abuja",
+    type: "Residential",
+    condition: "Good",
+    status: "for-rent",
+    images: ["/placeholder-property-2.jpg", "/placeholder-property-1.jpg"],
+    description:
+      "A modern apartment in Abuja, ideal for professionals or small families. Available for rent with flexible lease terms.",
+    availableFrom: "2025-03-20",
+  },
+];
 
 export default function PropertyDetails({
   params,
 }: {
   params: { id: string };
 }) {
-  return (
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
-      <main className="flex-grow bg-soft-gray">
-        <section className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <h1 className="text-3xl md:text-4xl font-playfair text-deep-navy-blue mb-4">
-              {property.title}
-            </h1>
-            <p className="text-xl font-playfair text-rich-gold mb-4">
-              {property.price}
-            </p>
-            <div className="flex items-center space-x-2 text-sm font-inter text-gray-600 mb-4">
-              <FaMapMarkerAlt className="text-rich-gold" />
-              <p>{property.location}</p>
-            </div>
+  const property = properties.find((p) => p.id === params.id);
 
-            {/* Image Gallery */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-              <img
-                src={property.images[0]}
-                alt={property.title}
-                className="w-full h-96 object-cover rounded-xl"
-              />
-              <div className="grid grid-cols-2 gap-4">
-                {property.images.slice(1).map((image, index) => (
-                  <img
-                    key={index}
-                    src={image}
-                    alt={`${property.title} ${index + 1}`}
-                    className="w-full h-48 object-cover rounded-xl"
-                  />
-                ))}
-              </div>
-            </div>
-
-            {/* Details */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
-              <div className="lg:col-span-2">
-                <h2 className="text-2xl font-playfair text-deep-navy-blue mb-4">
-                  Description
-                </h2>
-                <p className="font-inter text-gray-600 mb-4">
-                  {property.description}
-                </p>
-                <h2 className="text-2xl font-playfair text-deep-navy-blue mb-4">
-                  Features
-                </h2>
-                <ul className="list-disc pl-5 font-inter text-gray-600">
-                  {property.features.map((feature, index) => (
-                    <li key={index}>{feature}</li>
-                  ))}
-                </ul>
-              </div>
-              <Card className="bg-white/80 backdrop-blur-md border-none shadow-lg rounded-xl">
-                <CardContent className="p-4">
-                  <h3 className="text-xl font-poppins font-semibold text-deep-navy-blue mb-4">
-                    Property Details
-                  </h3>
-                  <div className="space-y-2 font-inter text-gray-600">
-                    <div className="flex items-center space-x-2">
-                      <FaBed className="text-rich-gold" />
-                      <p>{property.beds} Bedrooms</p>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <FaBath className="text-rich-gold" />
-                      <p>{property.baths} Bathrooms</p>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <FaRulerCombined className="text-rich-gold" />
-                      <p>{property.area}</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Contact Form */}
-            <Card className="bg-white/80 backdrop-blur-md border-none shadow-lg rounded-xl">
-              <CardContent className="p-6">
-                <h2 className="text-2xl font-playfair text-deep-navy-blue mb-4">
-                  Contact Agent
-                </h2>
-                <form className="space-y-4">
-                  <Input
-                    type="text"
-                    placeholder="Your Name"
-                    className="border border-soft-gray focus:ring-2 focus:ring-rich-gold"
-                  />
-                  <Input
-                    type="email"
-                    placeholder="Your Email"
-                    className="border border-soft-gray focus:ring-2 focus:ring-rich-gold"
-                  />
-                  <Textarea
-                    placeholder="Your Message"
-                    className="border border-soft-gray focus:ring-2 focus:ring-rich-gold"
-                  />
-                  <Button className="w-full bg-emerald-green text-white hover:bg-green-600 transition-colors font-poppins">
-                    Send Inquiry
-                  </Button>
-                </form>
-              </CardContent>
-            </Card>
-          </motion.div>
+  if (!property) {
+    return (
+      <main className="bg-soft-gray py-12 px-4 sm:px-6 lg:px-8">
+        <section className="max-w-7xl mx-auto text-center">
+          <h1 className="text-4xl font-bold text-deep-navy-blue mb-4">
+            Property Not Found
+          </h1>
+          <p className="text-lg text-gray-600">
+            The property you’re looking for does not exist.
+          </p>
+          <Link href="/properties/all">
+            <Button className="mt-4 bg-rich-gold text-deep-navy-blue px-6 py-2 rounded hover:bg-yellow-400 font-poppins">
+              Back to Properties
+            </Button>
+          </Link>
         </section>
       </main>
-      <Footer />
-    </div>
+    );
+  }
+
+  return (
+    <main className="bg-soft-gray py-12 px-4 sm:px-6 lg:px-8">
+      <section className="max-w-7xl mx-auto">
+        {/* Property Header */}
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold text-deep-navy-blue mb-2">
+            {property.title}
+          </h1>
+          <div className="flex items-center text-lg text-gray-600">
+            <FaMapMarkerAlt className="text-rich-gold mr-2" />
+            <span>{property.location}</span>
+          </div>
+          <p className="text-2xl font-bold text-rich-gold mt-2">
+            {property.price || property.monthlyRent}
+          </p>
+        </div>
+
+        {/* Image Gallery */}
+        <div className="mb-8">
+          <h2 className="text-2xl font-semibold text-deep-navy-blue mb-4">
+            Gallery
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {property.images.map((image, index) => (
+              <img
+                key={index}
+                src={image}
+                alt={`${property.title} - Image ${index + 1}`}
+                className="w-full h-48 object-cover rounded-lg"
+                loading="lazy"
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Property Details */}
+        <Card className="bg-white border-none rounded-lg p-6 mb-8">
+          <CardContent>
+            <h2 className="text-2xl font-semibold text-deep-navy-blue mb-4">
+              Property Details
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-600">
+              <div className="flex items-center">
+                <FaBed className="text-rich-gold mr-2" />
+                <span>{property.beds} Beds</span>
+              </div>
+              <div className="flex items-center">
+                <FaBath className="text-rich-gold mr-2" />
+                <span>{property.baths} Baths</span>
+              </div>
+              <div className="flex items-center">
+                <FaRulerCombined className="text-rich-gold mr-2" />
+                <span>{property.area}</span>
+              </div>
+              <div className="flex items-center">
+                <FaTag className="text-rich-gold mr-2" />
+                <span>Type: {property.type}</span>
+              </div>
+              <div className="flex items-center">
+                <FaTools className="text-rich-gold mr-2" />
+                <span>Condition: {property.condition}</span>
+              </div>
+              {property.preferredClosingDate && (
+                <div className="flex items-center">
+                  <span>
+                    Preferred Closing: {property.preferredClosingDate}
+                  </span>
+                </div>
+              )}
+              {property.availableFrom && (
+                <div className="flex items-center">
+                  <span>Available From: {property.availableFrom}</span>
+                </div>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Description */}
+        <Card className="bg-white border-none rounded-lg p-6 mb-8">
+          <CardContent>
+            <h2 className="text-2xl font-semibold text-deep-navy-blue mb-4">
+              Description
+            </h2>
+            <p className="text-gray-600">{property.description}</p>
+          </CardContent>
+        </Card>
+
+        {/* Contact Agent */}
+        <div className="text-center">
+          <Link href="/find-an-agent">
+            <Button className="bg-emerald-green text-white px-6 py-2 rounded hover:bg-green-600 font-poppins">
+              Contact an Agent
+            </Button>
+          </Link>
+        </div>
+      </section>
+    </main>
   );
 }

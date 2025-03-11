@@ -1,30 +1,12 @@
-// app/terms/page.tsx
-"use client";
-
-import Navbar from "@/components/home/NavBar";
-import Footer from "@/components/home/Footer";
-import { motion } from "framer-motion";
-
 export default function Terms() {
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar />
       <main className="flex-grow bg-soft-gray">
         <section className="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-3xl md:text-4xl font-playfair text-deep-navy-blue text-center mb-8"
-          >
+          <div className="text-3xl md:text-4xl font-playfair text-deep-navy-blue text-center mb-8">
             Terms and Conditions
-          </motion.h1>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="space-y-6 font-inter text-gray-600"
-          >
+          </div>
+          <div className="space-y-6 font-inter text-gray-600">
             <section>
               <h2 className="text-xl font-poppins font-semibold text-deep-navy-blue mb-2">
                 1. Acceptance of Terms
@@ -94,10 +76,9 @@ export default function Terms() {
                 .
               </p>
             </section>
-          </motion.div>
+          </div>
         </section>
       </main>
-      <Footer />
     </div>
   );
 }

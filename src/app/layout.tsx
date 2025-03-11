@@ -9,11 +9,17 @@ export const metadata = {
 };
 
 import { ReactNode } from "react";
+import Navbar from "@/components/home/NavBar";
+import Footer from "@/components/home/Footer";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <Navbar />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }

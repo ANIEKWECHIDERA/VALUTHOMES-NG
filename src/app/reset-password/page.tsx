@@ -1,8 +1,6 @@
 // app/reset-password/page.tsx
 "use client";
 
-import Navbar from "@/components/home/NavBar";
-import Footer from "@/components/home/Footer";
 import { motion } from "framer-motion";
 import {
   Card,
@@ -17,7 +15,6 @@ import { Button } from "@/components/ui/button";
 export default function ResetPassword() {
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar />
       <main className="flex-grow bg-soft-gray">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -56,7 +53,6 @@ export default function ResetPassword() {
           </Card>
         </motion.div>
       </main>
-      <Footer />
     </div>
   );
 }

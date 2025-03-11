@@ -155,7 +155,7 @@ const Features = () => {
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.2 }}
           className="text-3xl md:text-4xl font-playfair text-deep-navy-blue text-center mb-16"
         >
           ValutHomes NG at a Glance
@@ -166,7 +166,7 @@ const Features = () => {
               key={index}
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: index * 0.2 }}
+              transition={{ duration: 0.2, delay: index * 0.2 }}
               className={`relative ${index % 2 === 0 ? "lg:-mt-6" : "lg:mt-6"}`}
             >
               <Card className="bg-white/80 backdrop-blur-md border-none shadow-lg rounded-xl hover:shadow-xl transition-shadow">
@@ -190,7 +190,7 @@ const Features = () => {
         <motion.h3
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.2 }}
           className="text-2xl md:text-3xl font-playfair text-deep-navy-blue text-center mb-8"
         >
           Featured Properties
@@ -201,7 +201,7 @@ const Features = () => {
               key={index}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: index * 0.2 }}
+              transition={{ duration: 0.2, delay: index * 0.2 }}
             >
               <Card className="bg-white/80 backdrop-blur-md border-none shadow-lg rounded-xl overflow-hidden hover:shadow-xl transition-shadow">
                 <CardContent className="p-0">
@@ -235,7 +235,7 @@ const Features = () => {
         <motion.h3
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.2 }}
           className="text-2xl md:text-3xl font-playfair text-deep-navy-blue text-center mb-10"
         >
           Platform Advantages
@@ -246,7 +246,7 @@ const Features = () => {
               key={index}
               initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: index * 0.2 }}
+              transition={{ duration: 0.2, delay: index * 0.2 }}
             >
               <Card className="bg-white/80 backdrop-blur-md border-none shadow-lg rounded-xl hover:shadow-xl transition-shadow">
                 <CardContent className="p-6 flex items-start space-x-4">
@@ -269,7 +269,7 @@ const Features = () => {
         <motion.h3
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.2 }}
           className="text-2xl md:text-3xl font-playfair text-deep-navy-blue text-center mb-10"
         >
           Market Insights
@@ -280,7 +280,7 @@ const Features = () => {
               key={index}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: index * 0.2 }}
+              transition={{ duration: 0.2, delay: index * 0.2 }}
             >
               <Card className="bg-white/80 backdrop-blur-md border-none shadow-lg rounded-xl overflow-hidden hover:shadow-xl transition-shadow">
                 <CardContent className="p-4">
@@ -311,7 +311,7 @@ const Features = () => {
         <motion.h3
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.2 }}
           className="text-2xl md:text-3xl font-playfair text-deep-navy-blue text-center mb-10"
         >
           Success Stories
@@ -322,7 +322,7 @@ const Features = () => {
               key={index}
               initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: index * 0.2 }}
+              transition={{ duration: 0.2, delay: index * 0.2 }}
             >
               <Card className="bg-white/80 backdrop-blur-md border-none shadow-lg rounded-xl overflow-hidden hover:shadow-xl transition-shadow">
                 <CardContent className="p-4">

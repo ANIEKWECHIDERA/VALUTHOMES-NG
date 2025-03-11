@@ -1,8 +1,6 @@
 // app/login/page.tsx
 "use client";
 
-import Navbar from "@/components/home/NavBar";
-import Footer from "@/components/home/Footer";
 import { motion } from "framer-motion";
 import {
   Card,
@@ -18,7 +16,6 @@ import { FaGoogle, FaFacebook } from "react-icons/fa"; // react-icons for social
 export default function Login() {
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar />
       <main className="flex-grow bg-soft-gray">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -90,7 +87,6 @@ export default function Login() {
           </Card>
         </motion.div>
       </main>
-      <Footer />
     </div>
   );
 }

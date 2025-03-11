@@ -6,17 +6,17 @@ import * as yup from "yup";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { FaTimes } from "react-icons/fa";
+import { FaCamera, FaTimes } from "react-icons/fa";
 import { useState } from "react";
 
-// Validation schema
+// Validation schema for renting
 const schema = yup.object().shape({
   propertyAddress: yup.string().required("Property address is required"),
-  askingPrice: yup
+  monthlyRent: yup
     .number()
-    .typeError("Price must be a number")
-    .positive("Price must be positive")
-    .required("Asking price is required"),
+    .typeError("Rent must be a number")
+    .positive("Rent must be positive")
+    .required("Monthly rent is required"),
   email: yup
     .string()
     .email("Invalid email format")
@@ -29,9 +29,9 @@ const schema = yup.object().shape({
     )
     .required("Phone number is required"),
   propertyCondition: yup.string().required("Property condition is required"),
-  preferredClosingDate: yup
+  availableFrom: yup
     .date()
-    .required("Preferred closing date is required")
+    .required("Available from date is required")
     .min(new Date(), "Date must be in the future"),
   propertyType: yup.string().required("Property type is required"),
   images: yup
@@ -39,15 +39,14 @@ const schema = yup.object().shape({
     .test(
       "fileCount",
       "Maximum 10 images allowed",
-      (value) => !value || (value && (value as File[]).length <= 10)
+      (value) => !value || (value && (value as FileList).length <= 10)
     )
     .test(
       "fileSize",
       "Each image must be less than 5MB",
       (value) =>
         !value ||
-        (value &&
-          Array.isArray(value) &&
+        (Array.isArray(value) &&
           value.every((file: File) => file.size <= 5 * 1024 * 1024))
     )
     .test(
@@ -62,7 +61,7 @@ const schema = yup.object().shape({
 
 type FormData = yup.InferType<typeof schema>;
 
-export default function SellProperty() {
+export default function RentProperty() {
   const {
     register,
     handleSubmit,
@@ -73,11 +72,11 @@ export default function SellProperty() {
     resolver: yupResolver(schema),
     defaultValues: {
       propertyAddress: "",
-      askingPrice: undefined,
+      monthlyRent: undefined,
       email: "",
       phone: "",
       propertyCondition: "",
-      preferredClosingDate: undefined,
+      availableFrom: undefined,
       propertyType: "",
       images: undefined,
     },
@@ -99,16 +98,18 @@ export default function SellProperty() {
 
   const removeImage = (index: number) => {
     const newPreviews = imagePreviews.filter((_, i) => i !== index);
-    const newFiles = Array.isArray(images)
-      ? images.filter((_, i) => i !== index)
-      : [];
+    const newFiles = Array.from(images as FileList).filter(
+      (_, i) => i !== index
+    );
     setImagePreviews(newPreviews);
     setValue("images", newFiles.length > 0 ? newFiles : undefined);
   };
 
   const onSubmit = (data: FormData) => {
     console.log("Form submitted:", data);
-    alert("Property submitted successfully! Check console for details.");
+    alert(
+      "Property submitted successfully for rent! Check console for details."
+    );
     // Clean up image previews
     imagePreviews.forEach((url) => URL.revokeObjectURL(url));
     setImagePreviews([]);
@@ -120,26 +121,26 @@ export default function SellProperty() {
         {/* Hero Section */}
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-deep-navy-blue mb-4">
-            Sell Your Property
+            Rent Your Property
           </h1>
           <p className="text-lg text-gray-600">
-            Choose the best way to sell your home with ValutHomes NG.
+            List your property for rent with ValutHomes NG.
           </p>
         </div>
 
-        {/* Sell Options Info */}
+        {/* Rent Options Info */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
           <Card className="bg-white border-none rounded-lg p-6">
             <CardContent>
               <h3 className="text-xl font-semibold text-deep-navy-blue mb-2">
-                Sell with an Agent
+                Rent with an Agent
               </h3>
               <p className="text-gray-600 mb-4">
-                Partner with a local expert to maximize your sale price.
+                Partner with a local expert to find the best tenants.
               </p>
               <img
-                src="/placeholder-sell-agent.jpg"
-                alt="Sell with Agent"
+                src="/placeholder-rent-agent.jpg"
+                alt="Rent with Agent"
                 className="w-full h-32 object-cover rounded-lg mb-2"
                 loading="lazy"
               />
@@ -148,14 +149,14 @@ export default function SellProperty() {
           <Card className="bg-white border-none rounded-lg p-6">
             <CardContent>
               <h3 className="text-xl font-semibold text-deep-navy-blue mb-2">
-                Cash Offer
+                Direct Tenant Match
               </h3>
               <p className="text-gray-600 mb-4">
-                Get a fast, hassle-free cash offer for your property.
+                We’ll connect you directly with verified tenants.
               </p>
               <img
-                src="/placeholder-cash-offer.jpg"
-                alt="Cash Offer"
+                src="/placeholder-tenant-match.jpg"
+                alt="Direct Tenant Match"
                 className="w-full h-32 object-cover rounded-lg mb-2"
                 loading="lazy"
               />
@@ -164,14 +165,14 @@ export default function SellProperty() {
           <Card className="bg-white border-none rounded-lg p-6">
             <CardContent>
               <h3 className="text-xl font-semibold text-deep-navy-blue mb-2">
-                Sell on Your Own
+                Rent on Your Own
               </h3>
               <p className="text-gray-600 mb-4">
                 List your property yourself with our tools and support.
               </p>
               <img
-                src="/placeholder-sell-own.jpg"
-                alt="Sell on Your Own"
+                src="/placeholder-rent-own.jpg"
+                alt="Rent on Your Own"
                 className="w-full h-32 object-cover rounded-lg mb-2"
                 loading="lazy"
               />
@@ -179,11 +180,11 @@ export default function SellProperty() {
           </Card>
         </div>
 
-        {/* Sell Property Form */}
+        {/* Rent Property Form */}
         <Card className="bg-white border-none rounded-lg p-6">
           <CardContent>
             <h2 className="text-2xl font-bold text-deep-navy-blue mb-6">
-              Submit Your Property for Sale
+              Submit Your Property for Rent
             </h2>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               {/* Property Address */}
@@ -203,20 +204,20 @@ export default function SellProperty() {
                 )}
               </div>
 
-              {/* Asking Price */}
+              {/* Monthly Rent */}
               <div>
                 <label className="block text-sm font-medium text-deep-navy-blue mb-1">
-                  Asking Price ($)
+                  Monthly Rent ($)
                 </label>
                 <Input
-                  {...register("askingPrice")}
+                  {...register("monthlyRent")}
                   type="number"
                   className="w-full p-2 rounded border border-soft-gray focus:ring-2 focus:ring-rich-gold text-deep-navy-blue"
-                  placeholder="Enter asking price"
+                  placeholder="Enter monthly rent"
                 />
-                {errors.askingPrice && (
+                {errors.monthlyRent && (
                   <p className="text-red-500 text-sm mt-1">
-                    {errors.askingPrice.message}
+                    {errors.monthlyRent.message}
                   </p>
                 )}
               </div>
@@ -299,19 +300,19 @@ export default function SellProperty() {
                 )}
               </div>
 
-              {/* Preferred Closing Date */}
+              {/* Available From */}
               <div>
                 <label className="block text-sm font-medium text-deep-navy-blue mb-1">
-                  Preferred Closing Date
+                  Available From
                 </label>
                 <Input
-                  {...register("preferredClosingDate")}
+                  {...register("availableFrom")}
                   type="date"
                   className="w-full p-2 rounded border border-soft-gray focus:ring-2 focus:ring-rich-gold text-deep-navy-blue"
                 />
-                {errors.preferredClosingDate && (
+                {errors.availableFrom && (
                   <p className="text-red-500 text-sm mt-1">
-                    {errors.preferredClosingDate.message}
+                    {errors.availableFrom.message}
                   </p>
                 )}
               </div>

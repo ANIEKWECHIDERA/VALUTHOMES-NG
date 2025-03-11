@@ -1,9 +1,6 @@
 // app/contact/page.tsx
 "use client";
 
-import Navbar from "@/components/home/NavBar";
-import Footer from "@/components/home/Footer";
-import { motion } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -84,23 +81,12 @@ export default function Contact() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar />
       <main className="flex-grow bg-soft-gray">
         <section className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-3xl md:text-4xl font-playfair text-deep-navy-blue text-center mb-8"
-          >
+          <h1 className="text-3xl md:text-4xl font-playfair text-deep-navy-blue text-center mb-8">
             Contact Us
-          </motion.h1>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="grid grid-cols-1 lg:grid-cols-2 gap-8"
-          >
+          </h1>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Contact Form */}
             <div className="bg-white/80 backdrop-blur-md rounded-xl shadow-lg p-6">
               <h2 className="text-2xl font-playfair text-deep-navy-blue mb-4">
@@ -205,10 +191,9 @@ export default function Contact() {
                 </p>
               </div>
             </div>
-          </motion.div>
+          </div>
         </section>
       </main>
-      <Footer />
     </div>
   );
 }
