@@ -8,11 +8,11 @@ import { FaChevronDown, FaBars, FaTimes } from "react-icons/fa";
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isPropertiesDropdownOpen, setIsPropertiesDropdownOpen] =
-    useState(false); // Renamed for clarity
+    useState(false);
   const [isListPropertyDropdownOpen, setIsListPropertyDropdownOpen] =
-    useState(false); // New state for List Your Property dropdown
+    useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const listPropertyDropdownRef = useRef<HTMLDivElement>(null); // New ref for the new dropdown
+  const listPropertyDropdownRef = useRef<HTMLDivElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   // Handle click outside to close dropdowns and mobile menu
@@ -48,8 +48,18 @@ const Navbar = () => {
     },
   };
 
-  // Animation variants for dropdown
+  // Animation variants for dropdown (simplified for mobile)
   const dropdownVariants = {
+    closed: { opacity: 0, y: -10 },
+    open: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.3, ease: "easeInOut" },
+    },
+  };
+
+  // Desktop dropdown variants (unchanged, still needs height animation)
+  const desktopDropdownVariants = {
     closed: { opacity: 0, y: -10, height: 0 },
     open: {
       opacity: 1,
@@ -95,7 +105,7 @@ const Navbar = () => {
                 />
               </button>
               <motion.div
-                variants={dropdownVariants}
+                variants={desktopDropdownVariants}
                 initial="closed"
                 animate={isPropertiesDropdownOpen ? "open" : "closed"}
                 className="absolute left-0 mt-2 w-48 bg-deep-navy-blue shadow-lg rounded-md overflow-hidden"
@@ -143,7 +153,6 @@ const Navbar = () => {
             >
               Find an Agent
             </Link>
-            {/* New "List Your Property" Dropdown */}
             <div className="relative" ref={listPropertyDropdownRef}>
               <button
                 onClick={() =>
@@ -160,7 +169,7 @@ const Navbar = () => {
                 />
               </button>
               <motion.div
-                variants={dropdownVariants}
+                variants={desktopDropdownVariants}
                 initial="closed"
                 animate={isListPropertyDropdownOpen ? "open" : "closed"}
                 className="absolute left-0 mt-2 w-48 bg-deep-navy-blue shadow-lg rounded-md overflow-hidden"
@@ -253,63 +262,65 @@ const Navbar = () => {
                   }`}
                 />
               </button>
-              <motion.div
-                variants={dropdownVariants}
-                initial="closed"
-                animate={isPropertiesDropdownOpen ? "open" : "closed"}
-                className="pl-4 mt-2 space-y-2"
-              >
-                <Link
-                  href="/properties"
-                  onClick={() => {
-                    setIsPropertiesDropdownOpen(false);
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className="block hover:text-rich-gold transition-colors"
+              {isPropertiesDropdownOpen && (
+                <motion.div
+                  variants={dropdownVariants}
+                  initial="closed"
+                  animate={isPropertiesDropdownOpen ? "open" : "closed"}
+                  className="pl-4 mt-2 space-y-2"
                 >
-                  All Properties
-                </Link>
-                <Link
-                  href="/properties/for-sale"
-                  onClick={() => {
-                    setIsPropertiesDropdownOpen(false);
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className="block hover:text-rich-gold transition-colors"
-                >
-                  For Sale
-                </Link>
-                <Link
-                  href="/properties/for-rent"
-                  onClick={() => {
-                    setIsPropertiesDropdownOpen(false);
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className="block hover:text-rich-gold transition-colors"
-                >
-                  For Rent
-                </Link>
-                <Link
-                  href="/properties/luxury"
-                  onClick={() => {
-                    setIsPropertiesDropdownOpen(false);
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className="block hover:text-rich-gold transition-colors"
-                >
-                  Luxury Listings
-                </Link>
-                <Link
-                  href="/properties/commercial"
-                  onClick={() => {
-                    setIsPropertiesDropdownOpen(false);
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className="block hover:text-rich-gold transition-colors"
-                >
-                  Commercial Properties
-                </Link>
-              </motion.div>
+                  <Link
+                    href="/properties"
+                    onClick={() => {
+                      setIsPropertiesDropdownOpen(false);
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="block hover:text-rich-gold transition-colors"
+                  >
+                    All Properties
+                  </Link>
+                  <Link
+                    href="/properties/for-sale"
+                    onClick={() => {
+                      setIsPropertiesDropdownOpen(false);
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="block hover:text-rich-gold transition-colors"
+                  >
+                    For Sale
+                  </Link>
+                  <Link
+                    href="/properties/for-rent"
+                    onClick={() => {
+                      setIsPropertiesDropdownOpen(false);
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="block hover:text-rich-gold transition-colors"
+                  >
+                    For Rent
+                  </Link>
+                  <Link
+                    href="/properties/luxury"
+                    onClick={() => {
+                      setIsPropertiesDropdownOpen(false);
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="block hover:text-rich-gold transition-colors"
+                  >
+                    Luxury Listings
+                  </Link>
+                  <Link
+                    href="/properties/commercial"
+                    onClick={() => {
+                      setIsPropertiesDropdownOpen(false);
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="block hover:text-rich-gold transition-colors"
+                  >
+                    Commercial Properties
+                  </Link>
+                </motion.div>
+              )}
             </div>
             <Link
               href="/agents"
@@ -318,7 +329,6 @@ const Navbar = () => {
             >
               Find an Agent
             </Link>
-            {/* New "List Your Property" Dropdown in Mobile Menu */}
             <div>
               <button
                 onClick={() =>
@@ -334,33 +344,35 @@ const Navbar = () => {
                   }`}
                 />
               </button>
-              <motion.div
-                variants={dropdownVariants}
-                initial="closed"
-                animate={isListPropertyDropdownOpen ? "open" : "closed"}
-                className="pl-4 mt-2 space-y-2"
-              >
-                <Link
-                  href="/sell"
-                  onClick={() => {
-                    setIsListPropertyDropdownOpen(false);
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className="block hover:text-rich-gold transition-colors"
+              {isListPropertyDropdownOpen && (
+                <motion.div
+                  variants={dropdownVariants}
+                  initial="closed"
+                  animate={isListPropertyDropdownOpen ? "open" : "closed"}
+                  className="pl-4 mt-2 space-y-2"
                 >
-                  Sell Your Property
-                </Link>
-                <Link
-                  href="/rent-property"
-                  onClick={() => {
-                    setIsListPropertyDropdownOpen(false);
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className="block hover:text-rich-gold transition-colors"
-                >
-                  Rent Your Property
-                </Link>
-              </motion.div>
+                  <Link
+                    href="/sell"
+                    onClick={() => {
+                      setIsListPropertyDropdownOpen(false);
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="block hover:text-rich-gold transition-colors"
+                  >
+                    Sell Your Property
+                  </Link>
+                  <Link
+                    href="/rent-property"
+                    onClick={() => {
+                      setIsListPropertyDropdownOpen(false);
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="block hover:text-rich-gold transition-colors"
+                  >
+                    Rent Your Property
+                  </Link>
+                </motion.div>
+              )}
             </div>
             <Link
               href="/about"

@@ -6,7 +6,7 @@ import * as yup from "yup";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { FaCamera, FaTimes } from "react-icons/fa";
+import { FaTimes } from "react-icons/fa";
 import { useState } from "react";
 
 // Validation schema for renting

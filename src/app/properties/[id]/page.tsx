@@ -9,55 +9,79 @@ import {
   FaTools,
 } from "react-icons/fa";
 import Link from "next/link";
+import Carousel from "../../../components/properties/Carousel";
 
-// Static data (replace with API call in a real app)
-const properties = [
-  {
-    id: "1",
-    title: "Lagos Luxury Villa",
-    price: "$500,000",
-    monthlyRent: null,
-    beds: 4,
-    baths: 3,
-    area: "350 sqm",
-    location: "Lagos",
-    type: "Luxury",
-    condition: "Excellent",
-    status: "for-sale",
-    images: [
-      "/placeholder-property-1.jpg",
-      "/placeholder-property-2.jpg",
-      "/placeholder-property-3.jpg",
-    ],
-    description:
-      "This stunning luxury villa in the heart of Lagos offers unparalleled views and modern amenities. Perfect for families or investors looking for a high-end property.",
-    preferredClosingDate: "2025-04-15",
-  },
-  {
-    id: "2",
-    title: "Abuja Modern Apartment",
-    price: null,
-    monthlyRent: "$1,500/month",
-    beds: 3,
-    baths: 2,
-    area: "250 sqm",
-    location: "Abuja",
-    type: "Residential",
-    condition: "Good",
-    status: "for-rent",
-    images: ["/placeholder-property-2.jpg", "/placeholder-property-1.jpg"],
-    description:
-      "A modern apartment in Abuja, ideal for professionals or small families. Available for rent with flexible lease terms.",
-    availableFrom: "2025-03-20",
-  },
-];
+// Simulated API response type
+type Property = {
+  id: string;
+  title: string;
+  price?: string;
+  monthlyRent?: string;
+  beds: number;
+  baths: number;
+  area: string;
+  location: string;
+  type: string;
+  condition: string;
+  status: string;
+  images: string[];
+  description: string;
+  preferredClosingDate?: string;
+  availableFrom?: string;
+};
 
-export default function PropertyDetails({
+// Simulated API fetch (replace with real API call)
+async function fetchProperty(id: string): Promise<Property | null> {
+  const properties: Property[] = [
+    {
+      id: "1",
+      title: "Lagos Luxury Villa",
+      price: "$500,000",
+      monthlyRent: undefined,
+      beds: 4,
+      baths: 3,
+      area: "350 sqm",
+      location: "Lagos",
+      type: "Luxury",
+      condition: "Excellent",
+      status: "for-sale",
+      images: [
+        "/placeholder-property-1.jpg",
+        "/placeholder-property-2.jpg",
+        "/placeholder-property-3.jpg",
+      ],
+      description:
+        "This stunning luxury villa in the heart of Lagos offers unparalleled views and modern amenities. Perfect for families or investors looking for a high-end property.",
+      preferredClosingDate: "2025-04-15",
+    },
+    {
+      id: "2",
+      title: "Abuja Modern Apartment",
+      price: undefined,
+      monthlyRent: "$1,500/month",
+      beds: 3,
+      baths: 2,
+      area: "250 sqm",
+      location: "Abuja",
+      type: "Residential",
+      condition: "Good",
+      status: "for-rent",
+      images: ["/placeholder-property-2.jpg", "/placeholder-property-1.jpg"],
+      description:
+        "A modern apartment in Abuja, ideal for professionals or small families. Available for rent with flexible lease terms.",
+      availableFrom: "2025-03-20",
+    },
+  ];
+
+  return properties.find((p) => p.id === id) || null;
+}
+
+export default async function PropertyDetails({
   params,
 }: {
   params: { id: string };
 }) {
-  const property = properties.find((p) => p.id === params.id);
+  const property = await fetchProperty(params.id);
 
   if (!property) {
     return (
@@ -96,22 +120,12 @@ export default function PropertyDetails({
           </p>
         </div>
 
-        {/* Image Gallery */}
+        {/* Image Carousel (Delegated to Client Component) */}
         <div className="mb-8">
           <h2 className="text-2xl font-semibold text-deep-navy-blue mb-4">
             Gallery
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {property.images.map((image, index) => (
-              <img
-                key={index}
-                src={image}
-                alt={`${property.title} - Image ${index + 1}`}
-                className="w-full h-48 object-cover rounded-lg"
-                loading="lazy"
-              />
-            ))}
-          </div>
+          <Carousel images={property.images} />
         </div>
 
         {/* Property Details */}
