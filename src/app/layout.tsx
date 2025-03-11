@@ -9,8 +9,6 @@ export const metadata = {
 };
 
 import { ReactNode } from "react";
-import Navbar from "@/components/home/NavBar";
-import Footer from "@/components/home/Footer";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (

@@ -1,4 +1,4 @@
-// app/properties/all/page.tsx
+// app/properties/luxury/page.tsx
 "use client";
 
 import Navbar from "@/components/home/NavBar";
@@ -28,43 +28,11 @@ const properties = [
     location: "Lagos",
     type: "House",
     image: "/placeholder-property-1.jpg",
-  },
-  {
-    id: 2,
-    title: "Abuja Modern Apartment",
-    price: "$300,000",
-    beds: 3,
-    baths: 2,
-    area: "250 sqm",
-    location: "Abuja",
-    type: "Apartment",
-    image: "/placeholder-property-2.jpg",
-  },
-  {
-    id: 3,
-    title: "Port Harcourt Commercial Space",
-    price: "$400,000",
-    beds: 0,
-    baths: 2,
-    area: "280 sqm",
-    location: "Port Harcourt",
-    type: "Commercial",
-    image: "/placeholder-property-3.jpg",
-  },
-  {
-    id: 4,
-    title: "Ibadan Family Estate",
-    price: "$350,000",
-    beds: 5,
-    baths: 4,
-    area: "400 sqm",
-    location: "Ibadan",
-    type: "House",
-    image: "/placeholder-property-4.jpg",
+    status: "luxury",
   },
 ];
 
-export default function AllProperties() {
+export default function LuxuryListings() {
   const [filters, setFilters] = useState({
     location: "all",
     type: "all",
@@ -74,11 +42,15 @@ export default function AllProperties() {
   });
 
   const filteredProperties = properties.filter((property) => {
+    console.log("Filters:", filters); // Debug log to check filter values
     return (
+      property.status === "luxury" &&
       (filters.location === "all" || property.location === filters.location) &&
       (filters.type === "all" || property.type === filters.type) &&
       (filters.price === "all" ||
-        property.price.includes(filters.price.split("-")[0])) &&
+        property.price.includes(filters.price.split("-")[0]) ||
+        (filters.price === "500k+" &&
+          parseFloat(property.price.replace(/[^0-9.-]+/g, "")) >= 500000)) &&
       (filters.beds === "all" || property.beds >= parseInt(filters.beds)) &&
       (filters.baths === "all" || property.baths >= parseInt(filters.baths))
     );
@@ -95,7 +67,7 @@ export default function AllProperties() {
             transition={{ duration: 0.8 }}
             className="text-3xl md:text-4xl font-playfair text-deep-navy-blue text-center mb-8"
           >
-            All Properties
+            Luxury Listings
           </motion.h1>
 
           <motion.div
@@ -108,6 +80,8 @@ export default function AllProperties() {
               type="text"
               placeholder="Search by location, property type..."
               className="flex-1 p-2 rounded-md border border-soft-gray focus:outline-none focus:ring-2 focus:ring-rich-gold font-inter text-deep-navy-blue"
+              spellCheck={false} // Explicitly set spellCheck to false
+              suppressHydrationWarning // Suppress hydration warnings for this component
             />
             <Select
               value={filters.location}
@@ -152,9 +126,8 @@ export default function AllProperties() {
               </SelectTrigger>
               <SelectContent className="bg-white text-deep-navy-blue">
                 <SelectItem value="all">All Prices</SelectItem>
-                <SelectItem value="$0-$200K">$0 - $200K</SelectItem>
-                <SelectItem value="$200K-$500K">$200K - $500K</SelectItem>
-                <SelectItem value="$500K+">$500K+</SelectItem>
+                <SelectItem value="200k-500k">$200K - $500K</SelectItem>
+                <SelectItem value="500k+">$500K+</SelectItem>
               </SelectContent>
             </Select>
             <Select

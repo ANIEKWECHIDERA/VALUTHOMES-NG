@@ -93,7 +93,7 @@ const Testimonials = () => {
                     className="w-20 h-20 rounded-full mx-auto mb-4 object-cover"
                   />
                   <p className="text-lg font-inter italic text-gray-700 mb-4">
-                    "{testimonials[currentIndex].review}"
+                    &quot;{testimonials[currentIndex].review}&quot;
                   </p>
                   <h3 className="text-xl font-poppins font-semibold text-deep-navy-blue mb-2">
                     {testimonials[currentIndex].name}

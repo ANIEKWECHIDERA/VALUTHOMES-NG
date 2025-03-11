@@ -30,27 +30,26 @@ const properties = [
     image: "/placeholder-property-3.jpg",
     status: "commercial",
   },
-  // Add more commercial properties
 ];
 
 export default function CommercialProperties() {
   const [filters, setFilters] = useState({
-    location: "",
-    type: "",
-    price: "",
-    beds: "",
-    baths: "",
+    location: "all",
+    type: "all",
+    price: "all",
+    beds: "all",
+    baths: "all",
   });
 
   const filteredProperties = properties.filter((property) => {
     return (
       property.status === "commercial" &&
-      (!filters.location || property.location === filters.location) &&
-      (!filters.type || property.type === filters.type) &&
-      (!filters.price ||
+      (filters.location === "all" || property.location === filters.location) &&
+      (filters.type === "all" || property.type === filters.type) &&
+      (filters.price === "all" ||
         property.price.includes(filters.price.split("-")[0])) &&
-      (!filters.beds || property.beds >= parseInt(filters.beds)) &&
-      (!filters.baths || property.baths >= parseInt(filters.baths))
+      (filters.beds === "all" || property.beds >= parseInt(filters.beds)) &&
+      (filters.baths === "all" || property.baths >= parseInt(filters.baths))
     );
   });
 
@@ -89,7 +88,7 @@ export default function CommercialProperties() {
                 <SelectValue placeholder="Select Location" />
               </SelectTrigger>
               <SelectContent className="bg-white text-deep-navy-blue">
-                <SelectItem value="">All Locations</SelectItem>
+                <SelectItem value="all">All Locations</SelectItem>
                 <SelectItem value="Lagos">Lagos</SelectItem>
                 <SelectItem value="Abuja">Abuja</SelectItem>
                 <SelectItem value="Port Harcourt">Port Harcourt</SelectItem>
@@ -104,7 +103,7 @@ export default function CommercialProperties() {
                 <SelectValue placeholder="Property Type" />
               </SelectTrigger>
               <SelectContent className="bg-white text-deep-navy-blue">
-                <SelectItem value="">All Types</SelectItem>
+                <SelectItem value="all">All Types</SelectItem>
                 <SelectItem value="House">House</SelectItem>
                 <SelectItem value="Apartment">Apartment</SelectItem>
                 <SelectItem value="Commercial">Commercial</SelectItem>
@@ -121,7 +120,7 @@ export default function CommercialProperties() {
                 <SelectValue placeholder="Price Range" />
               </SelectTrigger>
               <SelectContent className="bg-white text-deep-navy-blue">
-                <SelectItem value="">All Prices</SelectItem>
+                <SelectItem value="all">All Prices</SelectItem>
                 <SelectItem value="$0-$200K">$0 - $200K</SelectItem>
                 <SelectItem value="$200K-$500K">$200K - $500K</SelectItem>
                 <SelectItem value="$500K+">$500K+</SelectItem>
@@ -135,7 +134,7 @@ export default function CommercialProperties() {
                 <SelectValue placeholder="Beds" />
               </SelectTrigger>
               <SelectContent className="bg-white text-deep-navy-blue">
-                <SelectItem value="">All</SelectItem>
+                <SelectItem value="all">All</SelectItem>
                 <SelectItem value="1">1+</SelectItem>
                 <SelectItem value="2">2+</SelectItem>
                 <SelectItem value="3">3+</SelectItem>
@@ -152,7 +151,7 @@ export default function CommercialProperties() {
                 <SelectValue placeholder="Baths" />
               </SelectTrigger>
               <SelectContent className="bg-white text-deep-navy-blue">
-                <SelectItem value="">All</SelectItem>
+                <SelectItem value="all">All</SelectItem>
                 <SelectItem value="1">1+</SelectItem>
                 <SelectItem value="2">2+</SelectItem>
                 <SelectItem value="3">3+</SelectItem>

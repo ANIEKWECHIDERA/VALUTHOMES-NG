@@ -6,7 +6,7 @@ import Footer from "@/components/home/Footer";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card"; // ShadCN UI Card
 import { Button } from "@/components/ui/button"; // ShadCN UI Button
-import { FaUsers } from "react-icons/fa"; // react-icons
+// import { FaUsers } from "react-icons/fa"; // react-icons
 
 const teamMembers = [
   {
