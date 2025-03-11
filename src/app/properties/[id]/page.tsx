@@ -11,7 +11,7 @@ import {
 import Link from "next/link";
 import Carousel from "../../../components/properties/Carousel";
 
-// Simulated API response type
+// Define the Property type
 type Property = {
   id: string;
   title: string;
@@ -76,11 +76,13 @@ async function fetchProperty(id: string): Promise<Property | null> {
   return properties.find((p) => p.id === id) || null;
 }
 
-export default async function PropertyDetails({
-  params,
-}: {
-  params: { id: string };
-}) {
+// Define the params type for the dynamic route
+type Params = {
+  id: string;
+};
+
+// Use the correct props type for the Server Component
+export default async function PropertyDetails({ params }: { params: Params }) {
   const property = await fetchProperty(params.id);
 
   if (!property) {
