@@ -78,7 +78,7 @@ async function fetchProperty(id: string): Promise<Property | null> {
 }
 
 // Use Next.js's built-in types for dynamic route params
-import type { PageProps } from "next";
+import { GetServerSidePropsContext } from "next";
 
 // Define the params type explicitly
 type Params = {
@@ -86,7 +86,7 @@ type Params = {
 };
 
 // Extend PageProps with our specific params type
-type PropertyDetailsProps = PageProps & {
+type PropertyDetailsProps = GetServerSidePropsContext & {
   params: Params;
 };
 
