@@ -1,4 +1,4 @@
-"Use client";
+"use client";
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -78,12 +78,14 @@ async function getProperty(id: string): Promise<Property | null> {
   return properties.find((p) => p.id === id) || null;
 }
 
-export default async function PropertyDetails({
-  params,
-}: {
-  params: { id: string };
-}) {
-  const property = await getProperty(params.id);
+// Define the interface for PageProps with asynchronous params
+interface PageProps {
+  params: Promise<{ id: string }>;
+}
+
+export default async function PropertyDetails({ params }: PageProps) {
+  const { id } = await params;
+  const property = await getProperty(id);
 
   if (!property) {
     return (
@@ -122,7 +124,7 @@ export default async function PropertyDetails({
           </p>
         </div>
 
-        {/* Image Carousel (Delegated to Client Component) */}
+        {/* Image Carousel */}
         <div className="mb-8">
           <h2 className="text-2xl font-semibold text-deep-navy-blue mb-4">
             Gallery
