@@ -1,3 +1,5 @@
+"Use client";
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,9 +12,8 @@ import {
 } from "react-icons/fa";
 import Link from "next/link";
 import Carousel from "../../../components/properties/Carousel";
-import { notFound } from "next/navigation";
 
-// Define the Property type
+// Simulated API response type
 type Property = {
   id: string;
   title: string;
@@ -31,8 +32,8 @@ type Property = {
   availableFrom?: string;
 };
 
-// Simulated API fetch (replace with real API call)
-async function fetchProperty(id: string): Promise<Property | null> {
+// Simulate fetching data from an API (replace with real API call)
+async function getProperty(id: string): Promise<Property | null> {
   const properties: Property[] = [
     {
       id: "1",
@@ -77,27 +78,31 @@ async function fetchProperty(id: string): Promise<Property | null> {
   return properties.find((p) => p.id === id) || null;
 }
 
-// Use Next.js's built-in types for dynamic route params
-import { GetServerSidePropsContext } from "next";
-
-// Define the params type explicitly
-type Params = {
-  id: string;
-};
-
-// Extend PageProps with our specific params type
-type PropertyDetailsProps = GetServerSidePropsContext & {
-  params: Params;
-};
-
-// Use the correct type for the Server Component
 export default async function PropertyDetails({
   params,
-}: PropertyDetailsProps) {
-  const property = await fetchProperty(params.id);
+}: {
+  params: { id: string };
+}) {
+  const property = await getProperty(params.id);
 
   if (!property) {
-    notFound(); // Use Next.js's notFound() to handle 404
+    return (
+      <main className="bg-soft-gray py-12 px-4 sm:px-6 lg:px-8">
+        <section className="max-w-7xl mx-auto text-center">
+          <h1 className="text-4xl font-bold text-deep-navy-blue mb-4">
+            Property Not Found
+          </h1>
+          <p className="text-lg text-gray-600">
+            The property you're looking for does not exist.
+          </p>
+          <Link href="/properties/all">
+            <Button className="mt-4 bg-rich-gold text-deep-navy-blue px-6 py-2 rounded hover:bg-yellow-400 font-poppins">
+              Back to Properties
+            </Button>
+          </Link>
+        </section>
+      </main>
+    );
   }
 
   return (
