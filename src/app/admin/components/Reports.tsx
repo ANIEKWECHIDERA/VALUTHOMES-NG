@@ -60,7 +60,7 @@ export default function Reports() {
       </div>
 
       {/* Pagination Controls */}
-      <div className="mt-6 flex justify-between items-center">
+      <div className="mt-6 flex justify-center items-center space-x-6">
         <Button
           onClick={handlePrevious}
           disabled={currentPage === 1}

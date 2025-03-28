@@ -1,0 +1,10 @@
+.heroSection.loading {
+  background: #f0f0f0;
+  background-size: cover;
+  background-position: center;
+  transition: background-image 1s ease-in-out; /* Smooth transition */
+}
+
+.heroSection {
+  background-image: url("/1533.jpg");
+}

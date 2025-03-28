@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   Select,
   SelectContent,
@@ -9,14 +9,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"; // ShadCN UI Select component
+import styles from "./Hero.module.css";
 
 const Hero = () => {
   // States for search input and filtered options
   const [locationSearch, setLocationSearch] = useState("");
   const [propertySearch, setPropertySearch] = useState("");
+  const [isLoaded, setIsLoaded] = useState(false); // Correct state for lazy loading
 
   const locations = ["Lagos", "Abuja", "Port Harcourt", "Ibadan"];
-
   const propertyTypes = ["House", "Apartment", "Commercial", "Land"];
 
   // Filtered options for location and property types based on search input
@@ -31,9 +32,37 @@ const Hero = () => {
   // Refs for managing focus on the input fields
   const locationInputRef = useRef<HTMLInputElement>(null);
   const propertyInputRef = useRef<HTMLInputElement>(null);
+  const heroSectionRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsLoaded(true);
+          observer.disconnect(); // Stop observing once the element is in view
+        }
+      },
+      { threshold: 0.5 } // Trigger when the section is at least 50% in view
+    );
+
+    if (heroSectionRef.current) {
+      observer.observe(heroSectionRef.current);
+    }
+
+    return () => {
+      if (heroSectionRef.current) {
+        observer.disconnect();
+      }
+    };
+  }, []);
 
   return (
-    <section className="relative h-[80vh] bg-cover bg-center">
+    <section
+      ref={heroSectionRef}
+      className={`${styles.heroSection} relative h-[80vh] ${
+        isLoaded ? "loaded" : ""
+      }`}
+    >
       {/* Overlay */}
       <div className="absolute inset-0 bg-deep-navy-blue opacity-60"></div>
 

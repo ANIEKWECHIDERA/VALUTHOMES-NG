@@ -103,7 +103,7 @@ const properties = [
     beds: 4,
     baths: 3,
     area: "350 sqm",
-    image: "/placeholder-property-1.jpg",
+    image: "/17925.jpg",
   },
   {
     title: "Abuja Modern Home",
@@ -111,7 +111,8 @@ const properties = [
     beds: 3,
     baths: 2,
     area: "250 sqm",
-    image: "/placeholder-property-2.jpg",
+    image:
+      "https://i.pinimg.com/1200x/5a/25/68/5a25687445c3fa5909abea8c36a69f0c.jpg",
   },
   {
     title: "Port Harcourt Residence",
@@ -119,7 +120,8 @@ const properties = [
     beds: 3,
     baths: 2.5,
     area: "280 sqm",
-    image: "/placeholder-property-3.jpg",
+    image:
+      "https://www.silvacreate.com/wp-content/uploads/2020/05/places-to-live-port-harcourt-1024x683.jpg",
   },
   {
     title: "Ibadan Family Estate",
@@ -127,7 +129,8 @@ const properties = [
     beds: 5,
     baths: 4,
     area: "400 sqm",
-    image: "/placeholder-property-4.jpg",
+    image:
+      "https://cf.bstatic.com/xdata/images/hotel/max1024x768/633213826.jpg?k=c455d7317014b6c016d54c80990416efa34a51c89de6555a18e87885b4f497d6&o=",
   },
   {
     title: "Enugu Townhouse",
@@ -135,7 +138,8 @@ const properties = [
     beds: 2,
     baths: 2,
     area: "200 sqm",
-    image: "/placeholder-property-5.jpg",
+    image:
+      "https://solidagoconstruction.com/wp-content/uploads/2017/01/mks.jpg",
   },
   {
     title: "Shortlet In Owerri",
@@ -143,7 +147,8 @@ const properties = [
     beds: 2,
     baths: 2,
     area: "200 sqm",
-    image: "/placeholder-property-5.jpg",
+    image:
+      "https://mccapitalproperties.com/wp-content/uploads/2023/12/Fully-Furnished-Serviced-1-Bedroom-Apartments-Flats-for-Holiday-Homes-in-Owerri-Short-let-in-Owerri-Imo-State-by-Mc-Capital-Properties-6-jpg.webp",
   },
 ];
 
@@ -208,7 +213,7 @@ const Features = () => {
                   <img
                     src={property.image}
                     alt={property.title}
-                    className="w-full h-56 object-cover"
+                    className="w-full h-56 object-cover "
                   />
                   <div className="p-4">
                     <h4 className="text-lg font-poppins font-semibold text-deep-navy-blue mb-2">
