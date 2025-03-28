@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { FaMapMarkerAlt, FaBed, FaBath, FaRulerCombined } from "react-icons/fa";
 import { useState } from "react";
 import Link from "next/link";
+import styles from "../properties/propertiesPage.module.css";
 
 // Static data
 const properties = [
@@ -90,9 +91,9 @@ export default function AllProperties() {
 
   return (
     <main className="bg-soft-gray">
-      <section className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+      <section className={`max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 `}>
         {/* Hero Section */}
-        <div className="text-center mb-12">
+        <div className={"text-center mb-12"}>
           <h1 className="text-4xl font-bold text-deep-navy-blue mb-4">
             Explore All Properties
           </h1>
