@@ -64,7 +64,7 @@ const Hero = () => {
       }`}
     >
       {/* Overlay */}
-      <div className="absolute inset-0 bg-deep-navy-blue opacity-60"></div>
+      <div className="absolute inset-0 bg-deep-navy-blue opacity-60" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-center items-center text-center text-white">
         {/* Headline */}

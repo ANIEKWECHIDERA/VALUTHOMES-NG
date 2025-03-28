@@ -1,6 +1,6 @@
 // app/components/Features.tsx
 "use client";
-
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card"; // ShadCN UI Card component
 import {
@@ -71,13 +71,15 @@ const insights = [
     title: "Lagos Market",
     value: "Up 8% YOY",
     description: "Rising demand for luxury homes.",
-    image: "/placeholder-insight-1.jpg",
+    image:
+      "https://images.pexels.com/photos/28738504/pexels-photo-28738504/free-photo-of-colorful-model-houses-on-financial-charts.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
   },
   {
     title: "Abuja Trends",
     value: "Stable Growth",
     description: "Ideal for family residences.",
-    image: "/placeholder-insight-2.jpg",
+    image:
+      "https://images.pexels.com/photos/28053222/pexels-photo-28053222/free-photo-of-real-estate-finance-house-model-table-money-banknotes-door-key.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
   },
 ];
 
@@ -86,12 +88,14 @@ const successStories = [
   {
     title: "Aisha’s Journey",
     description: "Found her dream home in 7 days.",
-    image: "/placeholder-story-1.jpg",
+    image:
+      "https://images.pexels.com/photos/12599059/pexels-photo-12599059.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
   },
   {
     title: "Chinedu’s Sale",
     description: "Sold property with 10% profit.",
-    image: "/placeholder-story-2.jpg",
+    image:
+      "https://images.pexels.com/photos/12529233/pexels-photo-12529233.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
   },
 ];
 
@@ -174,7 +178,7 @@ const Features = () => {
               transition={{ duration: 0.2, delay: index * 0.2 }}
               className={`relative ${index % 2 === 0 ? "lg:-mt-6" : "lg:mt-6"}`}
             >
-              <Card className="bg-white/80 backdrop-blur-md border-none shadow-lg rounded-xl hover:shadow-xl transition-shadow">
+              <Card className="bg-white/80 backdrop-blur-md border-none -lg rounded-xl hover:-xl transition-">
                 <CardContent className="p-6 text-center">
                   <div className="mb-4">{stat.icon}</div>
                   <h3 className="text-xl font-poppins font-semibold text-deep-navy-blue mb-2">
@@ -208,7 +212,7 @@ const Features = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.2, delay: index * 0.2 }}
             >
-              <Card className="bg-white/80 backdrop-blur-md border-none shadow-lg rounded-xl overflow-hidden hover:shadow-xl transition-shadow">
+              <Card className="bg-white/80 backdrop-blur-md border-none rounded-xl overflow-hidden">
                 <CardContent className="p-0">
                   <img
                     src={property.image}
@@ -253,7 +257,7 @@ const Features = () => {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.2, delay: index * 0.2 }}
             >
-              <Card className="bg-white/80 backdrop-blur-md border-none shadow-lg rounded-xl hover:shadow-xl transition-shadow">
+              <Card className="bg-white/80 backdrop-blur-md border-none rounded-xl">
                 <CardContent className="p-6 flex items-start space-x-4">
                   <div>{highlight.icon}</div>
                   <div>
@@ -287,7 +291,7 @@ const Features = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.2, delay: index * 0.2 }}
             >
-              <Card className="bg-white/80 backdrop-blur-md border-none shadow-lg rounded-xl overflow-hidden hover:shadow-xl transition-shadow">
+              <Card className="bg-white/80 backdrop-blur-md border-none rounded-xl overflow-hidden">
                 <CardContent className="p-4">
                   <img
                     src={insight.image}
@@ -329,7 +333,7 @@ const Features = () => {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.2, delay: index * 0.2 }}
             >
-              <Card className="bg-white/80 backdrop-blur-md border-none shadow-lg rounded-xl overflow-hidden hover:shadow-xl transition-shadow">
+              <Card className="bg-white/80 backdrop-blur-md border-none rounded-xl overflow-hidden">
                 <CardContent className="p-4">
                   <img
                     src={story.image}

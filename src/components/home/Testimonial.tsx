@@ -12,21 +12,24 @@ const testimonials = [
     review:
       "The AI recommendations helped me find my perfect home in Lagos in just a week! The team was incredibly supportive.",
     rating: 5,
-    image: "/placeholder-avatar-1.jpg", // Replace with actual image path
+    image:
+      "https://images.pexels.com/photos/9851730/pexels-photo-9851730.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1", // Replace with actual image path
   },
   {
     name: "Chinedu Okonkwo",
     review:
       "Secure transactions and verified agents made selling my property a breeze. Highly recommend ValutHomes NG!",
     rating: 4.5,
-    image: "/placeholder-avatar-2.jpg",
+    image:
+      "https://images.pexels.com/photos/12529233/pexels-photo-12529233.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
   },
   {
     name: "Fatima Yusuf",
     review:
       "The virtual tours were a game-changer. I explored multiple properties without leaving my home!",
     rating: 4.8,
-    image: "/placeholder-avatar-3.jpg",
+    image:
+      "https://images.pexels.com/photos/29060910/pexels-photo-29060910/free-photo-of-smiling-woman-with-green-headwrap-and-earrings.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
   },
 ];
 
@@ -86,7 +89,7 @@ const Testimonials = () => {
               exit="exit"
             >
               <Card className="bg-white/80 backdrop-blur-md border-none shadow-lg rounded-xl w-full max-w-3xl mx-auto">
-                <CardContent className="p-6 text-center">
+                <CardContent className="p-11 md:p-10 text-center">
                   <img
                     src={testimonials[currentIndex].image}
                     alt={testimonials[currentIndex].name}
@@ -110,7 +113,7 @@ const Testimonials = () => {
           </AnimatePresence>
           <button
             onClick={prevTestimonial}
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-rich-gold text-deep-navy-blue p-3 rounded-full hover:bg-yellow-400 transition-colors"
+            className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-rich-gold  text-deep-navy-blue p-3 rounded-full hover:bg-yellow-400 transition-colors"
             title="Previous Testimonial"
           >
             <FaChevronLeft size={20} />

@@ -9,7 +9,7 @@ import { FaXTwitter, FaInstagram } from "react-icons/fa6";
 
 const Footer = () => {
   return (
-    <footer className="bg-deep-navy-blue text-white py-12">
+    <footer className="bg-deep-navy-blue text-white py-12 md:pr-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
