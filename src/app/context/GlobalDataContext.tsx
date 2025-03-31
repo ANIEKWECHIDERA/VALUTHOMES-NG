@@ -39,6 +39,7 @@ type Property = {
     | "warehouse";
   dateCreated: string;
   dateUpdated: string;
+  listingType: "sale" | "rent";
 };
 
 type Agent = {

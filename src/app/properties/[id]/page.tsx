@@ -62,7 +62,7 @@ export default function PropertyDetails({ params }: PageProps) {
             <span>{property.location}</span>
           </div>
           <p className="text-2xl font-bold text-rich-gold mt-2">
-            {property.category === "rent"
+            {property.listingType === "rent"
               ? `${currency.symbol}${new Intl.NumberFormat("en-NG").format(
                   Number(property.rentRate)
                 )}/mo`

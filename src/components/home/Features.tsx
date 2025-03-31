@@ -4,12 +4,17 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card"; // ShadCN UI Card component
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import { useGlobalData } from "../../app/context/GlobalDataContext";
 
 // Property Showcase Data
 
 const Features = () => {
+  const router = useRouter();
+  const handleExploreClick = () => {
+    router.push("/properties");
+  };
   const { properties, successStories, insights, stats, highlights, currency } =
     useGlobalData();
   const featuredProperties = properties
@@ -82,10 +87,10 @@ const Features = () => {
                       {property.name}
                     </h4>
                     <p className="text-xl font-playfair text-rich-gold mb-2">
-                      {property.category === "rent"
+                      {property.listingType === "rent"
                         ? `${currency.symbol}${new Intl.NumberFormat(
                             "en-NG"
-                          ).format(Number(property.rentRate))}/mo`
+                          ).format(Number(property.rentRate))}/year`
                         : `${currency.symbol}${new Intl.NumberFormat(
                             "en-NG"
                           ).format(Number(property.price))}`}
@@ -105,6 +110,19 @@ const Features = () => {
               </Card>
             </motion.div>
           ))}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            {/* Strong CTA */}
+            <button
+              onClick={handleExploreClick}
+              className="bg-emerald-green text-white px-4 py-3 rounded-md hover:bg-green-600 transition-colors font-poppins text-lg font-semibold w-full sm:w-auto"
+            >
+              Explore All Properties
+            </button>
+          </motion.div>
         </div>
 
         {/* Platform Highlights */}

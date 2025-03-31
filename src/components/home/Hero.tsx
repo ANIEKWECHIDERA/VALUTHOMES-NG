@@ -2,47 +2,33 @@
 
 import { motion } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"; // ShadCN UI Select component
+import { useGlobalData } from "../../app/context/GlobalDataContext"; // Assuming this provides properties
+import { useRouter } from "next/navigation"; // For redirection
 import styles from "./Hero.module.css";
+import { IoSearchCircleSharp } from "react-icons/io5";
 
 const Hero = () => {
-  // States for search input and filtered options
-  const [locationSearch, setLocationSearch] = useState("");
-  const [propertySearch, setPropertySearch] = useState("");
-  const [isLoaded, setIsLoaded] = useState(false); // Correct state for lazy loading
+  const { properties } = useGlobalData(); // Access properties data
+  const router = useRouter(); // For navigation
 
-  const locations = ["Lagos", "Abuja", "Port Harcourt", "Ibadan"];
-  const propertyTypes = ["House", "Apartment", "Commercial", "Land"];
+  // States for search
+  const [searchTerm, setSearchTerm] = useState(""); // Main search input
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [isLoaded, setIsLoaded] = useState(false);
 
-  // Filtered options for location and property types based on search input
-  const filteredLocations = locations.filter((location) =>
-    location.toLowerCase().includes(locationSearch.toLowerCase())
-  );
-
-  const filteredPropertyTypes = propertyTypes.filter((propertyType) =>
-    propertyType.toLowerCase().includes(propertySearch.toLowerCase())
-  );
-
-  // Refs for managing focus on the input fields
-  const locationInputRef = useRef<HTMLInputElement>(null);
-  const propertyInputRef = useRef<HTMLInputElement>(null);
+  // Refs
   const heroSectionRef = useRef(null);
 
+  // Lazy loading effect
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsLoaded(true);
-          observer.disconnect(); // Stop observing once the element is in view
+          observer.disconnect();
         }
       },
-      { threshold: 0.5 } // Trigger when the section is at least 50% in view
+      { threshold: 0.5 }
     );
 
     if (heroSectionRef.current) {
@@ -56,6 +42,74 @@ const Hero = () => {
     };
   }, []);
 
+  // Handle search input change
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+
+    if (value.trim() === "") {
+      setSuggestions([]);
+      return;
+    }
+
+    type Property = {
+      id: string;
+      name: string;
+      price?: string;
+      rentRate?: string;
+      description: string;
+      beds: number;
+      size: number;
+      baths: number;
+      images: string[];
+      condition: "new" | "used";
+      status: "available" | "sold" | "rented";
+      location: string;
+      category: "sale" | "rent" | "luxury" | "commercial";
+      type:
+        | "short-let"
+        | "apartment"
+        | "self-contain"
+        | "bungalow"
+        | "duplex"
+        | "land"
+        | "office-space"
+        | "shop"
+        | "warehouse";
+      dateCreated: string;
+      dateUpdated: string;
+      listingType: "sale" | "rent";
+    };
+
+    // Generate suggestions from properties data
+    const uniqueSuggestions = new Set<string>();
+    properties.forEach((property: Property) => {
+      if (property.name.toLowerCase().includes(value.toLowerCase())) {
+        uniqueSuggestions.add(property.name);
+      }
+      if (property.location.toLowerCase().includes(value.toLowerCase())) {
+        uniqueSuggestions.add(property.location);
+      }
+      if (property.type.toLowerCase().includes(value.toLowerCase())) {
+        uniqueSuggestions.add(property.type);
+      }
+    });
+
+    setSuggestions(Array.from(uniqueSuggestions).slice(0, 5));
+  };
+
+  // Handle suggestion click
+  const handleSuggestionClick = (suggestion: string) => {
+    setSearchTerm(suggestion);
+    setSuggestions([]);
+  };
+
+  // Handle search submission
+  const handleSearchSubmit = () => {
+    const query = new URLSearchParams({ search: searchTerm }).toString();
+    router.push(`/properties?${query}`);
+  };
+
   return (
     <section
       ref={heroSectionRef}
@@ -66,7 +120,7 @@ const Hero = () => {
       {/* Overlay */}
       <div className="absolute inset-0 bg-deep-navy-blue opacity-60" />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-center items-center text-center text-white">
+      <div className="relative max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 h-full flex flex-col justify-center items-center text-center text-white">
         {/* Headline */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
@@ -85,105 +139,59 @@ const Hero = () => {
           Explore the best properties in Nigeria with ValutHomes NG
         </motion.p>
 
-        {/* Search Bar with Filters */}
+        {/* Search Bar and CTA */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="bg-white rounded-lg p-4 shadow-lg w-full max-w-2xl sm:space-x-4 flex items-center flex-wrap"
+          className="sm:px-2 py-2 shadow-lg w-full max-w-2xl flex flex-col items-center space-y-4"
         >
-          {/* Search Input */}
-          <input
-            type="text"
-            placeholder="Search by location, property type..."
-            className="flex-1 p-2 rounded-md border border-soft-gray focus:outline-none focus:ring-2 focus:ring-rich-gold font-inter text-deep-navy-blue"
-          />
-
-          {/* Filter: Location */}
-          <Select>
-            <SelectTrigger className="w-full sm:w-[180px] mt-4 sm:mt-0 p-2 rounded-md border border-soft-gray bg-white text-deep-navy-blue focus:outline-none focus:ring-2 focus:ring-rich-gold font-inter">
-              <SelectValue placeholder="Select Location" />
-            </SelectTrigger>
-            <SelectContent className="bg-white text-deep-navy-blue">
+          <div className="flex flex-col sm:flex-row items-center justify-between w-full space-x-0 sm:space-x-4 sm:space-y-0 px-4 space-y-4">
+            {/* Search Input */}
+            <div className="relative w-full">
               <input
-                ref={locationInputRef}
+                // to make sure the search input has a valid value
+                // and is not empty before submitting the search
+                required
                 type="text"
-                placeholder="Search Location"
-                value={locationSearch}
-                onChange={(e) => setLocationSearch(e.target.value)}
-                className="p-2 mb-2 w-full rounded-md border border-soft-gray"
+                placeholder="Search by location, property type..."
+                value={searchTerm}
+                onChange={handleSearchChange}
+                className="w-full p-2 rounded-md border border-soft-gray focus:outline-none focus:ring-2 focus:ring-rich-gold font-inter text-deep-navy-blue bg-slate-100"
               />
-              {filteredLocations.map((location, index) => (
-                <SelectItem key={index} value={location.toLowerCase()}>
-                  {location}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+              {suggestions.length > 0 && (
+                <ul className="absolute z-10 w-full bg-white border border-soft-gray rounded shadow-lg mt-1 max-h-40 overflow-y-auto">
+                  {suggestions.map((suggestion, index) => (
+                    <li
+                      key={index}
+                      onClick={() => handleSuggestionClick(suggestion)}
+                      className="p-2 text-deep-navy-blue hover:bg-yellow-100 cursor-pointer"
+                    >
+                      {suggestion}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
 
-          {/* Filter: Property Type */}
-          <Select>
-            <SelectTrigger className="w-full sm:w-[180px] mt-4 sm:mt-0 p-2 rounded-md border border-soft-gray bg-white text-deep-navy-blue focus:outline-none focus:ring-2 focus:ring-rich-gold font-inter">
-              <SelectValue placeholder="Property Type" />
-            </SelectTrigger>
-            <SelectContent className="bg-white text-deep-navy-blue">
-              <input
-                ref={propertyInputRef}
-                type="text"
-                placeholder="Search Property Type"
-                value={propertySearch}
-                onChange={(e) => setPropertySearch(e.target.value)}
-                className="p-2 mb-2 w-full rounded-md border border-soft-gray"
+            {/* Search Button */}
+            <button
+              type="submit"
+              disabled={searchTerm.trim() === ""}
+              onClick={handleSearchSubmit}
+              title="Search"
+              className={`text-deep-navy-blue rounded-md font-poppins sm:w-auto ${
+                searchTerm.trim() === "" ? "cursor-not-allowed" : ""
+              }`}
+            >
+              <IoSearchCircleSharp
+                className={`  w-full text-center hover:text-yellow-400 transition-colors ${
+                  searchTerm.trim() === "" ? "text-gray-300" : "text-rich-gold"
+                }`}
+                size={50}
               />
-              {filteredPropertyTypes.map((property, index) => (
-                <SelectItem key={index} value={property.toLowerCase()}>
-                  {property}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-
-          {/* Filter: Price Range */}
-          <Select>
-            <SelectTrigger className="w-full sm:w-[180px] mt-4 sm:mt-0 p-2 rounded-md border border-soft-gray bg-white text-deep-navy-blue focus:outline-none focus:ring-2 focus:ring-rich-gold font-inter">
-              <SelectValue placeholder="Price Range" />
-            </SelectTrigger>
-            <SelectContent className="bg-white text-deep-navy-blue">
-              <SelectItem value="0-200k">$0 - $200K</SelectItem>
-              <SelectItem value="200k-500k">$200K - $500K</SelectItem>
-              <SelectItem value="500k+">$500K+</SelectItem>
-            </SelectContent>
-          </Select>
-
-          {/* Filter: Bedrooms */}
-          <Select>
-            <SelectTrigger className="w-full sm:w-[120px] mt-4 sm:mt-0 p-2 rounded-md border border-soft-gray bg-white text-deep-navy-blue focus:outline-none focus:ring-2 focus:ring-rich-gold font-inter">
-              <SelectValue placeholder="Beds" />
-            </SelectTrigger>
-            <SelectContent className="bg-white text-deep-navy-blue">
-              <SelectItem value="1">1+</SelectItem>
-              <SelectItem value="2">2+</SelectItem>
-              <SelectItem value="3">3+</SelectItem>
-              <SelectItem value="4">4+</SelectItem>
-            </SelectContent>
-          </Select>
-
-          {/* Filter: Bathrooms */}
-          <Select>
-            <SelectTrigger className="w-full sm:w-[120px] mt-4 sm:mt-0 p-2 rounded-md border border-soft-gray bg-white text-deep-navy-blue focus:outline-none focus:ring-2 focus:ring-rich-gold font-inter">
-              <SelectValue placeholder="Baths" />
-            </SelectTrigger>
-            <SelectContent className="bg-white text-deep-navy-blue">
-              <SelectItem value="1">1+</SelectItem>
-              <SelectItem value="2">2+</SelectItem>
-              <SelectItem value="3">3+</SelectItem>
-            </SelectContent>
-          </Select>
-
-          {/* Search Button */}
-          <button className="bg-rich-gold text-deep-navy-blue px-6 py-2 rounded-md hover:bg-yellow-400 transition-colors font-poppins w-full sm:w-auto mt-4 sm:mt-0">
-            Search
-          </button>
+            </button>
+          </div>
         </motion.div>
       </div>
     </section>
