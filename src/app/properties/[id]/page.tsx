@@ -13,10 +13,12 @@ import {
 import Link from "next/link";
 import Carousel from "../../../components/properties/Carousel";
 import { useGlobalData } from "@/app/context/GlobalDataContext";
+import { use } from "react"; // Assuming you have a use hook for fetching data
 
 // Define the interface for PageProps with asynchronous params
 interface PageProps {
   params: { id: string };
+  searchParams?: Record<string, string | string[] | undefined>;
 }
 
 export default function PropertyDetails({ params }: PageProps) {
