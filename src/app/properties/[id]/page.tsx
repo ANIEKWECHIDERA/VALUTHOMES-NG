@@ -18,23 +18,16 @@ import Breadcrumb from "@/components/properties/Breadcrumb";
 import { useEffect, useState } from "react";
 import { use } from "react";
 
+// For Next.js 15, params must be Promise<any>
 interface PageProps {
-  params: { id: string } | Promise<{ id: string }>;
-  searchParams?:
-    | Record<string, string | string[] | undefined>
-    | Promise<Record<string, string | string[] | undefined>>;
+  params: Promise<{ id: string }>;
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }
 
 export default function PropertyDetails({ params, searchParams }: PageProps) {
-  // Check if params is a Promise and unwrap it, or use it directly
-  const unwrappedParams = params instanceof Promise ? use(params) : params;
-
-  // Similarly for searchParams
-  const unwrappedSearchParams = searchParams
-    ? searchParams instanceof Promise
-      ? use(searchParams)
-      : searchParams
-    : {};
+  // Unwrap params and searchParams
+  const unwrappedParams = use(params);
+  const unwrappedSearchParams = searchParams ? use(searchParams) : {};
 
   const { id } = unwrappedParams;
   const { properties, currency } = useGlobalData();
