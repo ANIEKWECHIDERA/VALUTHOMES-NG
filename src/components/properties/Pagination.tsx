@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { MdNavigateNext } from "react-icons/md";
@@ -14,12 +16,14 @@ const Pagination: React.FC<PaginationProps> = ({
   handlePageChange,
 }) => {
   const [isLargeScreen, setIsLargeScreen] = useState<boolean>(
-    window.innerWidth >= 1024
+    typeof window !== "undefined" && window.innerWidth >= 1024
   );
 
   useEffect(() => {
     const handleResize = () => {
-      setIsLargeScreen(window.innerWidth >= 1024);
+      setIsLargeScreen(
+        typeof window !== "undefined" && window.innerWidth >= 1024
+      );
     };
 
     window.addEventListener("resize", handleResize);

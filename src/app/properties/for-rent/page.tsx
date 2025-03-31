@@ -1,6 +1,6 @@
 // app/properties/for-rent/page.tsx
 "use client";
-
+import dynamic from "next/dynamic";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,13 +15,16 @@ import { FaMapMarkerAlt, FaBed, FaBath, FaRulerCombined } from "react-icons/fa";
 import { useEffect } from "react";
 import Link from "next/link";
 import { useGlobalData } from "@/app/context/GlobalDataContext";
-import Pagination from "@/components/properties/Pagination";
+// import Pagination from "@/components/properties/Pagination";
 import { useFilters } from "@/hooks/useFilters";
 import { useSorting } from "@/hooks/useSorting";
 import { usePagination } from "@/hooks/usePagination";
 import { LazyLoadComponent } from "@/components/listings/LazyLoadComponent";
 import Breadcrumb from "@/components/properties/Breadcrumb";
 
+const Pagination = dynamic(() => import("@/components/properties/Pagination"), {
+  ssr: false,
+});
 const renderPropertyCard = (property: any, currency: { symbol: string }) => (
   <Card className="bg-white border-none rounded-lg overflow-hidden">
     <CardContent className="p-0">
