@@ -101,7 +101,9 @@ export default function CommercialProperties() {
   // Apply query params on mount to set initial search term
   // TO REUSE: Keep this useEffect to sync with URL query params
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
+    const params = new URLSearchParams(
+      typeof window !== "undefined" ? window.location.search : ""
+    );
     const search = params.get("search") || "";
     setFilters((prevFilters) => ({ ...prevFilters, searchTerm: search }));
   }, [setFilters]);

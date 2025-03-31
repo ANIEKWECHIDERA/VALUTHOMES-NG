@@ -127,7 +127,9 @@ export default function LuxuryListings() {
 
   // Apply query params on mount
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
+    const params = new URLSearchParams(
+      typeof window !== "undefined" ? window.location.search : ""
+    );
     const search = params.get("search") || "";
     setSearchTerm(search);
   }, [setSearchTerm]);
