@@ -26,7 +26,7 @@ export default function PropertyDetails({ params }: PageProps) {
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
   }
 
-  const { id } = params;
+  const { id }: any = use(params);
   const { properties, currency } = useGlobalData();
   const property = properties.find((property) => property.id === id);
 
