@@ -20,6 +20,7 @@ import { useFilters } from "@/hooks/useFilters";
 import { useSorting } from "@/hooks/useSorting";
 import { usePagination } from "@/hooks/usePagination";
 import { LazyLoadComponent } from "@/components/listings/LazyLoadComponent";
+import Breadcrumb from "@/components/properties/Breadcrumb";
 
 const renderPropertyCard = (property: any, currency: { symbol: string }) => (
   <Card className="bg-white border-none rounded-lg overflow-hidden">
@@ -66,7 +67,7 @@ const renderPropertyCard = (property: any, currency: { symbol: string }) => (
             <span>{property.size} sqm</span>
           </div>
         </div>
-        <Link href={`/properties/${property.id}`}>
+        <Link href={`/properties/${property.id}?from=luxury`}>
           <Button className="mt-4 w-full bg-emerald-green text-white hover:bg-green-600 font-poppins">
             View Details
           </Button>
@@ -205,8 +206,15 @@ export default function LuxuryListings() {
 
   return (
     <main className="bg-soft-gray">
-      <section className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
+      <section className="max-w-7xl mx-auto py-4 lg:py-12 px-4 sm:px-6 lg:px-8">
+        <Breadcrumb
+          items={[
+            { label: "Home", href: "/" },
+            { label: "Properties", href: "/properties" },
+            { label: "luxury" }, // Current page, no href
+          ]}
+        />
+        <div className="text-center lg:mb-12 mb-10">
           <h1 className="text-4xl font-bold text-deep-navy-blue mb-4">
             Luxury Listings
           </h1>
@@ -214,7 +222,7 @@ export default function LuxuryListings() {
             Explore the finest luxury properties in Nigeria.
           </p>
         </div>
-        <div className="bg-white rounded-lg p-4 mb-8 flex flex-wrap gap-4 md:sticky top-16 relative">
+        <div className="bg-white rounded-lg p-4 mb-8 flex flex-wrap gap-4 md:sticky md:top-32 relative">
           <div className="flex-grow-0 w-full relative">
             <Input
               type="text"

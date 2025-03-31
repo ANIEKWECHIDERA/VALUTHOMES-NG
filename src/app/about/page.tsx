@@ -1,6 +1,9 @@
 // app/about/page.
+
+"use client";
 import { Card, CardContent } from "@/components/ui/card"; // ShadCN UI Card
 import { Button } from "@/components/ui/button"; // ShadCN UI Button
+import Link from "next/link";
 // import { FaUsers } from "react-icons/fa"; // react-icons
 
 const teamMembers = [
@@ -95,9 +98,11 @@ export default function About() {
             <p className="text-lg font-inter text-gray-600 mb-8">
               Start exploring properties with ValutHomes NG today.
             </p>
-            <Button className="bg-emerald-green text-white px-6 py-3 rounded-md hover:bg-green-600 transition-colors font-poppins">
-              Explore Properties
-            </Button>
+            <Link href="/properties">
+              <Button className="bg-emerald-green text-white px-6 py-3 rounded-md hover:bg-green-600 transition-colors font-poppins">
+                Explore Properties
+              </Button>
+            </Link>
           </div>
         </section>
       </main>

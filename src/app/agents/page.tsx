@@ -7,40 +7,6 @@ import { Input } from "@/components/ui/input";
 import { FaStar, FaMapMarkerAlt, FaPhone } from "react-icons/fa";
 import { useGlobalData } from "../context/GlobalDataContext";
 
-// Static agent data (replace with API call in a real app)
-const agents = [
-  {
-    id: 1,
-    name: "Aminu Bello",
-    location: "Lagos, Nigeria",
-    rating: 4.8,
-    reviewCount: 25,
-    specialties: ["Buying", "Selling", "Luxury Homes"],
-    phone: "+234 801 234 5678",
-    image: "/placeholder-agent-1.jpg",
-  },
-  {
-    id: 2,
-    name: "Chika Okonkwo",
-    location: "Abuja, Nigeria",
-    rating: 4.5,
-    reviewCount: 18,
-    specialties: ["Renting", "Commercial", "Relocation"],
-    phone: "+234 802 345 6789",
-    image: "/placeholder-agent-2.jpg",
-  },
-  {
-    id: 3,
-    name: "Tunde Adebayo",
-    location: "Port Harcourt, Nigeria",
-    rating: 4.7,
-    reviewCount: 30,
-    specialties: ["Buying", "Foreclosures", "Investment"],
-    phone: "+234 803 456 7890",
-    image: "/placeholder-agent-3.jpg",
-  },
-];
-
 export default function FindAnAgent() {
   const { agents } = useGlobalData();
   const [searchTerm, setSearchTerm] = useState("");

@@ -12,22 +12,25 @@ interface Agent {
   address?: string;
   image: string;
   phone?: string;
+  isVerified?: boolean;
+  email?: string;
 }
 
 const mockAgents: Agent[] = [
   {
-    id: "1",
+    id: "20",
     name: "John Doe",
     location: "Lagos",
     rating: 4.5,
     reviewCount: 120,
     specialties: ["Residential", "Luxury", "House"],
-    properties: [mockProperties[0], mockProperties[1]],
+    properties: mockProperties.slice(45, 50),
     image: "https://www.example.com/agent1.jpg",
     phone: "08012345678",
+    isVerified: true,
   },
   {
-    id: "2",
+    id: "19",
     name: "Jane Smith",
     location: "Abuja",
     rating: 4.7,
@@ -38,7 +41,7 @@ const mockAgents: Agent[] = [
     phone: "07098765432",
   },
   {
-    id: "3",
+    id: "18",
     name: "Michael Johnson",
     location: "Port Harcourt",
     rating: 4.2,
@@ -49,7 +52,7 @@ const mockAgents: Agent[] = [
     phone: "08123456789",
   },
   {
-    id: "4",
+    id: "17",
     name: "Sarah Williams",
     location: "Ibadan",
     rating: 4.8,
@@ -60,7 +63,7 @@ const mockAgents: Agent[] = [
     phone: "09012345678",
   },
   {
-    id: "5",
+    id: "16",
     name: "David White",
     location: "Lagos",
     rating: 3.9,

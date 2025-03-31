@@ -1,3 +1,4 @@
+// app/properties/[id]/page.tsx
 "use client";
 
 import { Card, CardContent } from "@/components/ui/card";
@@ -11,24 +12,88 @@ import {
   FaTools,
 } from "react-icons/fa";
 import Link from "next/link";
-import Carousel from "../../../components/properties/Carousel";
+import Carousel from "@/components/properties/Carousel";
 import { useGlobalData } from "@/app/context/GlobalDataContext";
-import { use } from "react"; // Assuming you have a use hook for fetching data
+import Breadcrumb from "@/components/properties/Breadcrumb";
+import { useEffect, useState } from "react";
+import { use } from "react";
 
-// Define the interface for PageProps with asynchronous params
 interface PageProps {
   params: { id: string };
   searchParams?: Record<string, string | string[] | undefined>;
 }
 
-export default function PropertyDetails({ params }: PageProps) {
+export default function PropertyDetails({ params, searchParams }: PageProps) {
+  const { id } = params;
+  const { properties, currency } = useGlobalData();
+  const property = properties.find((property) => property.id === id);
+  const [breadcrumbItems, setBreadcrumbItems] = useState<
+    { label: string; href?: string }[]
+  >([]);
+
+  // Capitalize utility function
   function capitalize(str: string): string {
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
   }
 
-  const { id }: any = use(params);
-  const { properties, currency } = useGlobalData();
-  const property = properties.find((property) => property.id === id);
+  // Truncate property name if too long
+  function truncateName(name: string, maxLength: number = 20): string {
+    return name.length > maxLength
+      ? `${name.slice(0, maxLength - 3)}...`
+      : name;
+  }
+
+  // Determine breadcrumb based on searchParams
+  useEffect(() => {
+    const from = searchParams?.from as string | undefined; // Cast to string or undefined
+    const baseItems = [
+      { label: "Home", href: "/" },
+      { label: "Properties", href: "/properties" },
+    ];
+    let dynamicItems: { label: string; href?: string }[] = [];
+
+    if (!property) return;
+
+    const propertyName = truncateName(property.name);
+
+    // Map 'from' parameter to breadcrumb paths
+    switch (from) {
+      case "for-sale":
+        dynamicItems = [
+          ...baseItems,
+          { label: "For Sale", href: "/properties/for-sale" },
+          { label: propertyName },
+        ];
+        break;
+      case "for-rent":
+        dynamicItems = [
+          ...baseItems,
+          { label: "For Rent", href: "/properties/for-rent" },
+          { label: propertyName },
+        ];
+        break;
+      case "luxury":
+        dynamicItems = [
+          ...baseItems,
+          { label: "Luxury", href: "/properties/luxury" },
+          { label: propertyName },
+        ];
+        break;
+      case "commercial":
+        dynamicItems = [
+          ...baseItems,
+          { label: "Commercial", href: "/properties/commercial" },
+          { label: propertyName },
+        ];
+        break;
+      default:
+        // Default case (e.g., from home or no 'from' param)
+        dynamicItems = [...baseItems, { label: propertyName }];
+        break;
+    }
+
+    setBreadcrumbItems(dynamicItems);
+  }, [property, searchParams]);
 
   if (!property) {
     return (
@@ -54,6 +119,9 @@ export default function PropertyDetails({ params }: PageProps) {
   return (
     <main className="bg-soft-gray py-12 px-4 sm:px-6 lg:px-8">
       <section className="max-w-7xl mx-auto">
+        <div className="mb-6 h-auto sticky top-16 z-20">
+          <Breadcrumb items={breadcrumbItems} />
+        </div>
         {/* Property Header */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-deep-navy-blue mb-2">
@@ -67,7 +135,7 @@ export default function PropertyDetails({ params }: PageProps) {
             {property.listingType === "rent"
               ? `${currency.symbol}${new Intl.NumberFormat("en-NG").format(
                   Number(property.rentRate)
-                )}/mo`
+                )} ${property.type === "short-let" ? "/day" : "/year"}`
               : `${currency.symbol}${new Intl.NumberFormat("en-NG").format(
                   Number(property.price)
                 )}`}
@@ -107,21 +175,12 @@ export default function PropertyDetails({ params }: PageProps) {
               </div>
               <div className="flex items-center">
                 <FaTag className="text-rich-gold mr-2" />
-                {/* <span>Status: {property.status}</span> */}
-
                 <span>Type: {capitalize(property.type)}</span>
               </div>
               <div className="flex items-center">
                 <FaTools className="text-rich-gold mr-2" />
                 <span>Condition: {capitalize(property.condition)}</span>
               </div>
-              {/* {property.preferredClosingDate && (
-                <div className="flex items-center">
-                  <span>
-                    Preferred Closing: {property.preferredClosingDate}
-                  </span>
-                </div>
-              )} */}
               {property.dateCreated && (
                 <div className="flex items-center">
                   <span>
