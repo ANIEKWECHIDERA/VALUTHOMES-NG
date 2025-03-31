@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { FaMapMarkerAlt, FaBed, FaBath, FaRulerCombined } from "react-icons/fa";
 import { useState } from "react";
 import Link from "next/link";
+import { useGlobalData } from "@/app/context/GlobalDataContext";
 
 const properties = [
   {
@@ -43,6 +44,7 @@ const properties = [
 ];
 
 export default function PropertiesForSale() {
+  const { properties, currency } = useGlobalData();
   const [filters, setFilters] = useState({
     location: "all",
     type: "all",
@@ -52,9 +54,12 @@ export default function PropertiesForSale() {
   });
 
   const filteredProperties = properties.filter((property) => {
-    const priceValue = parseFloat(property.price.replace(/[^0-9.-]+/g, ""));
+    const priceValue = parseFloat(
+      (property.price ?? "").toString().replace(/[^0-9.-]+/g, "")
+    );
     return (
-      property.status === "for-sale" &&
+      property.status === "available" &&
+      property.category === "sale" &&
       (filters.location === "all" || property.location === filters.location) &&
       (filters.type === "all" || property.type === filters.type) &&
       (filters.price === "all" ||
@@ -141,7 +146,7 @@ export default function PropertiesForSale() {
               <SelectValue placeholder="Beds" />
             </SelectTrigger>
             <SelectContent className="bg-white text-deep-navy-blue">
-              <SelectItem value="all">All</SelectItem>
+              <SelectItem value="all">All Beds</SelectItem>
               <SelectItem value="1">1+</SelectItem>
               <SelectItem value="2">2+</SelectItem>
               <SelectItem value="3">3+</SelectItem>
@@ -156,7 +161,7 @@ export default function PropertiesForSale() {
               <SelectValue placeholder="Baths" />
             </SelectTrigger>
             <SelectContent className="bg-white text-deep-navy-blue">
-              <SelectItem value="all">All</SelectItem>
+              <SelectItem value="all">All Baths</SelectItem>
               <SelectItem value="1">1+</SelectItem>
               <SelectItem value="2">2+</SelectItem>
               <SelectItem value="3">3+</SelectItem>
@@ -174,17 +179,20 @@ export default function PropertiesForSale() {
             >
               <CardContent className="p-0">
                 <img
-                  src={property.image}
-                  alt={property.title}
+                  src={property.images[0]}
+                  alt={property.name}
                   className="w-full h-48 object-cover"
                   loading="lazy"
                 />
                 <div className="p-4">
                   <h3 className="text-lg font-semibold text-deep-navy-blue mb-2">
-                    {property.title}
+                    {property.name}
                   </h3>
                   <p className="text-xl font-bold text-rich-gold mb-2">
-                    {property.price}
+                    {currency.symbol}
+                    {new Intl.NumberFormat("en-NG").format(
+                      Number(property.price)
+                    )}
                   </p>
                   <div className="flex items-center text-sm text-gray-600 mb-2">
                     <FaMapMarkerAlt className="text-rich-gold mr-1" />
@@ -193,15 +201,19 @@ export default function PropertiesForSale() {
                   <div className="flex space-x-4 text-sm text-gray-600">
                     <div className="flex items-center">
                       <FaBed className="text-rich-gold mr-1" />
-                      <span>{property.beds} Beds</span>
+                      <span>
+                        {property.beds} Bed{property.beds === 1 ? "" : "s"}
+                      </span>
                     </div>
                     <div className="flex items-center">
                       <FaBath className="text-rich-gold mr-1" />
-                      <span>{property.baths} Baths</span>
+                      <span>
+                        {property.baths} Bath{property.baths === 1 ? "" : "s"}
+                      </span>
                     </div>
                     <div className="flex items-center">
                       <FaRulerCombined className="text-rich-gold mr-1" />
-                      <span>{property.area}</span>
+                      <span>{property.size} sqm</span>
                     </div>
                   </div>
                   <Link href={`/properties/${property.id}`}>

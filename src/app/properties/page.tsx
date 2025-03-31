@@ -12,57 +12,11 @@ import { Input } from "@/components/ui/input";
 import { FaMapMarkerAlt, FaBed, FaBath, FaRulerCombined } from "react-icons/fa";
 import { useState } from "react";
 import Link from "next/link";
-import styles from "../properties/propertiesPage.module.css";
-
-// Static data
-const properties = [
-  {
-    id: 1,
-    title: "Lagos Luxury Villa",
-    price: "$500,000",
-    beds: 4,
-    baths: 3,
-    area: "350 sqm",
-    location: "Lagos",
-    type: "House",
-    image: "/placeholder-property-1.jpg",
-  },
-  {
-    id: 2,
-    title: "Abuja Modern Apartment",
-    price: "$300,000",
-    beds: 3,
-    baths: 2,
-    area: "250 sqm",
-    location: "Abuja",
-    type: "Apartment",
-    image: "/placeholder-property-2.jpg",
-  },
-  {
-    id: 3,
-    title: "Port Harcourt Commercial Space",
-    price: "$400,000",
-    beds: 0,
-    baths: 2,
-    area: "280 sqm",
-    location: "Port Harcourt",
-    type: "Commercial",
-    image: "/placeholder-property-3.jpg",
-  },
-  {
-    id: 4,
-    title: "Ibadan Family Estate",
-    price: "$350,000",
-    beds: 5,
-    baths: 4,
-    area: "400 sqm",
-    location: "Ibadan",
-    type: "House",
-    image: "/placeholder-property-4.jpg",
-  },
-];
+// import styles from "../properties/propertiesPage.module.css";
+import { useGlobalData } from "../context/GlobalDataContext";
 
 export default function AllProperties() {
+  const { properties, currency } = useGlobalData();
   const [filters, setFilters] = useState({
     location: "all",
     type: "all",
@@ -72,7 +26,9 @@ export default function AllProperties() {
   });
 
   const filteredProperties = properties.filter((property) => {
-    const priceValue = parseFloat(property.price.replace(/[^0-9.-]+/g, ""));
+    const priceValue = parseFloat(
+      (property.price ?? "").toString().replace(/[^0-9.-]+/g, "")
+    );
     return (
       (filters.location === "all" || property.location === filters.location) &&
       (filters.type === "all" || property.type === filters.type) &&
@@ -91,7 +47,9 @@ export default function AllProperties() {
 
   return (
     <main className="bg-soft-gray">
-      <section className={`max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 `}>
+      <section
+        className={`max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 h-auto`}
+      >
         {/* Hero Section */}
         <div className={"text-center mb-12"}>
           <h1 className="text-4xl font-bold text-deep-navy-blue mb-4">
@@ -103,7 +61,7 @@ export default function AllProperties() {
         </div>
 
         {/* Filter Section */}
-        <div className="bg-white rounded-lg p-4 mb-8 flex flex-wrap gap-4">
+        <div className="bg-white rounded-lg p-4 mb-8 flex flex-wrap gap-4 md:sticky top-16">
           <Input
             type="text"
             placeholder="Search by location, property type..."
@@ -135,10 +93,15 @@ export default function AllProperties() {
             </SelectTrigger>
             <SelectContent className="bg-white text-deep-navy-blue">
               <SelectItem value="all">All Types</SelectItem>
-              <SelectItem value="House">House</SelectItem>
-              <SelectItem value="Apartment">Apartment</SelectItem>
-              <SelectItem value="Commercial">Commercial</SelectItem>
-              <SelectItem value="Land">Land</SelectItem>
+              <SelectItem value="short-let">Short-Let</SelectItem>
+              <SelectItem value="apartment">Apartment</SelectItem>
+              <SelectItem value="self-contain">Self-Contain</SelectItem>
+              <SelectItem value="bungalow">Bungalow</SelectItem>
+              <SelectItem value="duplex">Duplex</SelectItem>
+              <SelectItem value="land">Land</SelectItem>
+              <SelectItem value="office-space">Office-Space</SelectItem>
+              <SelectItem value="shop">Shop</SelectItem>
+              <SelectItem value="warehouse">Warehouse</SelectItem>
             </SelectContent>
           </Select>
           <Select
@@ -163,7 +126,7 @@ export default function AllProperties() {
               <SelectValue placeholder="Beds" />
             </SelectTrigger>
             <SelectContent className="bg-white text-deep-navy-blue">
-              <SelectItem value="all">All</SelectItem>
+              <SelectItem value="all">Beds</SelectItem>
               <SelectItem value="1">1+</SelectItem>
               <SelectItem value="2">2+</SelectItem>
               <SelectItem value="3">3+</SelectItem>
@@ -178,7 +141,7 @@ export default function AllProperties() {
               <SelectValue placeholder="Baths" />
             </SelectTrigger>
             <SelectContent className="bg-white text-deep-navy-blue">
-              <SelectItem value="all">All</SelectItem>
+              <SelectItem value="all">Baths</SelectItem>
               <SelectItem value="1">1+</SelectItem>
               <SelectItem value="2">2+</SelectItem>
               <SelectItem value="3">3+</SelectItem>
@@ -198,17 +161,20 @@ export default function AllProperties() {
             >
               <CardContent className="p-0">
                 <img
-                  src={property.image}
-                  alt={property.title}
+                  src={property.images[0]}
+                  alt={property.name}
                   className="w-full h-48 object-cover"
                   loading="lazy"
                 />
                 <div className="p-4">
                   <h3 className="text-lg font-semibold text-deep-navy-blue mb-2">
-                    {property.title}
+                    {property.name.slice(0, 25)}
+                    {property.name.length > 25 ? "..." : ""}
                   </h3>
                   <p className="text-xl font-bold text-rich-gold mb-2">
-                    {property.price}
+                    {property.category === "rent"
+                      ? `${currency}${property.rentRate}/mo`
+                      : `${currency}${property.price}`}
                   </p>
                   <div className="flex items-center text-sm text-gray-600 mb-2">
                     <FaMapMarkerAlt className="text-rich-gold mr-1" />
@@ -217,15 +183,19 @@ export default function AllProperties() {
                   <div className="flex space-x-4 text-sm text-gray-600">
                     <div className="flex items-center">
                       <FaBed className="text-rich-gold mr-1" />
-                      <span>{property.beds} Beds</span>
+                      <span>
+                        {property.beds} Bed{property.beds === 1 ? "" : "s"}
+                      </span>
                     </div>
                     <div className="flex items-center">
                       <FaBath className="text-rich-gold mr-1" />
-                      <span>{property.baths} Baths</span>
+                      <span>
+                        {property.baths} Bath{property.baths === 1 ? "" : "s"}
+                      </span>
                     </div>
                     <div className="flex items-center">
                       <FaRulerCombined className="text-rich-gold mr-1" />
-                      <span>{property.area}</span>
+                      <span>{property.size} sqm</span>
                     </div>
                   </div>
                   <Link href={`/properties/${property.id}`}>

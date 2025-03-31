@@ -13,22 +13,10 @@ import { FaMapMarkerAlt, FaBed, FaBath, FaRulerCombined } from "react-icons/fa";
 import { useState } from "react";
 import Link from "next/link";
 
-const luxuryProperties = [
-  {
-    id: 1,
-    title: "Lagos Luxury Villa",
-    price: "$500,000",
-    beds: 4,
-    baths: 3,
-    area: "350 sqm",
-    location: "Lagos",
-    type: "House",
-    image: "/placeholder-property-1.jpg",
-    status: "luxury",
-  },
-];
+import { useGlobalData } from "@/app/context/GlobalDataContext";
 
 export default function LuxuryListings() {
+  const { properties, currency } = useGlobalData();
   const [filters, setFilters] = useState({
     location: "all",
     type: "all",
@@ -37,10 +25,13 @@ export default function LuxuryListings() {
     baths: "all",
   });
 
-  const filteredProperties = luxuryProperties.filter((property) => {
-    const priceValue = parseFloat(property.price.replace(/[^0-9.-]+/g, ""));
+  const filteredProperties = properties.filter((property) => {
+    const priceValue = parseFloat(
+      (property.price ?? "").replace(/[^0-9.-]+/g, "")
+    );
     return (
-      property.status === "luxury" &&
+      property.status === "available" &&
+      property.category === "luxury" && // Ensure the property is luxury
       (filters.location === "all" || property.location === filters.location) &&
       (filters.type === "all" || property.type === filters.type) &&
       (filters.price === "all" ||
@@ -123,7 +114,7 @@ export default function LuxuryListings() {
               <SelectValue placeholder="Beds" />
             </SelectTrigger>
             <SelectContent className="bg-white text-deep-navy-blue">
-              <SelectItem value="all">All</SelectItem>
+              <SelectItem value="all">All Beds</SelectItem>
               <SelectItem value="1">1+</SelectItem>
               <SelectItem value="2">2+</SelectItem>
               <SelectItem value="3">3+</SelectItem>
@@ -138,7 +129,7 @@ export default function LuxuryListings() {
               <SelectValue placeholder="Baths" />
             </SelectTrigger>
             <SelectContent className="bg-white text-deep-navy-blue">
-              <SelectItem value="all">All</SelectItem>
+              <SelectItem value="all">All Baths</SelectItem>
               <SelectItem value="1">1+</SelectItem>
               <SelectItem value="2">2+</SelectItem>
               <SelectItem value="3">3+</SelectItem>
@@ -156,17 +147,23 @@ export default function LuxuryListings() {
             >
               <CardContent className="p-0">
                 <img
-                  src={property.image}
-                  alt={property.title}
+                  src={property.images[0]}
+                  alt={property.name}
                   className="w-full h-48 object-cover"
                   loading="lazy"
                 />
                 <div className="p-4">
                   <h3 className="text-lg font-semibold text-deep-navy-blue mb-2">
-                    {property.title}
+                    {property.name}
                   </h3>
                   <p className="text-xl font-bold text-rich-gold mb-2">
-                    {property.price}
+                    {property.category === "rent"
+                      ? `${currency.symbol}${new Intl.NumberFormat(
+                          "en-NG"
+                        ).format(Number(property.rentRate))}/mo`
+                      : `${currency.symbol}${new Intl.NumberFormat(
+                          "en-NG"
+                        ).format(Number(property.price))}`}
                   </p>
                   <div className="flex items-center text-sm text-gray-600 mb-2">
                     <FaMapMarkerAlt className="text-rich-gold mr-1" />
@@ -175,22 +172,26 @@ export default function LuxuryListings() {
                   <div className="flex space-x-4 text-sm text-gray-600">
                     <div className="flex items-center">
                       <FaBed className="text-rich-gold mr-1" />
-                      <span>{property.beds} Beds</span>
+                      <span>
+                        {property.beds} Bed{property.beds === 1 ? "" : "s"}
+                      </span>
                     </div>
                     <div className="flex items-center">
                       <FaBath className="text-rich-gold mr-1" />
-                      <span>{property.baths} Baths</span>
+                      <span>
+                        {property.baths} Bath{property.baths === 1 ? "" : "s"}
+                      </span>
                     </div>
                     <div className="flex items-center">
                       <FaRulerCombined className="text-rich-gold mr-1" />
-                      <span>{property.area}</span>
+                      <span>{property.size} sqm</span>
                     </div>
                   </div>
                   <Link href={`/properties/${property.id}`}>
-            <Button className="mt-4 w-full bg-emerald-green text-white hover:bg-green-600 font-poppins">
-              View Details
-            </Button>
-          </Link>
+                    <Button className="mt-4 w-full bg-emerald-green text-white hover:bg-green-600 font-poppins">
+                      View Details
+                    </Button>
+                  </Link>
                 </div>
               </CardContent>
             </Card>

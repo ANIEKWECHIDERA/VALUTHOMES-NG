@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FaStar, FaMapMarkerAlt, FaPhone } from "react-icons/fa";
+import { useGlobalData } from "../context/GlobalDataContext";
 
 // Static agent data (replace with API call in a real app)
 const agents = [
@@ -41,6 +42,7 @@ const agents = [
 ];
 
 export default function FindAnAgent() {
+  const { agents } = useGlobalData();
   const [searchTerm, setSearchTerm] = useState("");
   const [locationFilter, setLocationFilter] = useState("all");
   const [filteredAgents, setFilteredAgents] = useState(agents);
