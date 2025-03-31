@@ -19,12 +19,24 @@ import { useEffect, useState } from "react";
 import { use } from "react";
 
 interface PageProps {
-  params: { id: string };
-  searchParams?: Record<string, string | string[] | undefined>;
+  params: { id: string } | Promise<{ id: string }>;
+  searchParams?:
+    | Record<string, string | string[] | undefined>
+    | Promise<Record<string, string | string[] | undefined>>;
 }
 
 export default function PropertyDetails({ params, searchParams }: PageProps) {
-  const { id } = params;
+  // Check if params is a Promise and unwrap it, or use it directly
+  const unwrappedParams = params instanceof Promise ? use(params) : params;
+
+  // Similarly for searchParams
+  const unwrappedSearchParams = searchParams
+    ? searchParams instanceof Promise
+      ? use(searchParams)
+      : searchParams
+    : {};
+
+  const { id } = unwrappedParams;
   const { properties, currency } = useGlobalData();
   const property = properties.find((property) => property.id === id);
   const [breadcrumbItems, setBreadcrumbItems] = useState<
@@ -45,7 +57,7 @@ export default function PropertyDetails({ params, searchParams }: PageProps) {
 
   // Determine breadcrumb based on searchParams
   useEffect(() => {
-    const from = searchParams?.from as string | undefined; // Cast to string or undefined
+    const from = unwrappedSearchParams?.from as string | undefined;
     const baseItems = [
       { label: "Home", href: "/" },
       { label: "Properties", href: "/properties" },
@@ -93,7 +105,7 @@ export default function PropertyDetails({ params, searchParams }: PageProps) {
     }
 
     setBreadcrumbItems(dynamicItems);
-  }, [property, searchParams]);
+  }, [property, unwrappedSearchParams]);
 
   if (!property) {
     return (
