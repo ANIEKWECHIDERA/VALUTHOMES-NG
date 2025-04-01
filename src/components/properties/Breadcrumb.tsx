@@ -42,7 +42,7 @@ export default function Breadcrumb({ items }: BreadcrumbProps) {
               {item.href ? (
                 <Link
                   href={item.href}
-                  className="inline-flex items-center text-base font-medium text-deep-navy-blue hover:text-rich-gold transition-colors"
+                  className="inline-flex items-center text-xs md:text-base font-medium text-deep-navy-blue hover:text-rich-gold transition-colors"
                 >
                   {index === 0 && (
                     <svg
@@ -58,7 +58,7 @@ export default function Breadcrumb({ items }: BreadcrumbProps) {
                   {item.label}
                 </Link>
               ) : (
-                <span className="text-base font-medium text-gray-500 dark:text-gray-400">
+                <span className="text-xs md:text-base font-medium text-gray-500 dark:text-gray-400">
                   {item.label}
                 </span>
               )}

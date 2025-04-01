@@ -182,7 +182,7 @@ export default function AllProperties() {
 
   return (
     <main className="bg-soft-gray">
-      <section className="max-w-7xl mx-auto py-3 lg:py-12 px-4 sm:px-6 lg:px-8 h-auto">
+      <section className="max-w-7xl mx-auto pb-3 lg:pb-12 px-4 sm:px-6 lg:px-8 h-auto">
         <Breadcrumb
           items={[
             { label: "Home", href: "/" },

@@ -44,7 +44,7 @@ export default function PropertyDetails({ params, searchParams }: PageProps) {
   // Truncate property name if too long
   function truncateName(name: string, maxLength: number = 20): string {
     return name.length > maxLength
-      ? `${name.slice(0, maxLength - 3)}...`
+      ? `${name.slice(0, maxLength - 10)}...`
       : name;
   }
 
@@ -122,7 +122,7 @@ export default function PropertyDetails({ params, searchParams }: PageProps) {
   }
 
   return (
-    <main className="bg-soft-gray py-12 px-4 sm:px-6 lg:px-8">
+    <main className="bg-soft-gray pb-12 px-4 sm:px-6 lg:px-8">
       <section className="max-w-7xl mx-auto">
         <div className="mb-6 h-auto sticky top-16 z-20">
           <Breadcrumb items={breadcrumbItems} />

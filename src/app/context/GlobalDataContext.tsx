@@ -53,6 +53,7 @@ type Agent = {
   address?: string;
   image: string;
   phone?: string; // Optional phone number
+  isVerified?: boolean; // Optional verification status
 };
 
 type successStories = {

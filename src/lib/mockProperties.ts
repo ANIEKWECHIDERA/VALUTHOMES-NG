@@ -953,7 +953,7 @@ const mockProperties: Property[] = [
       "https://images.unsplash.com/photo-1484154218962-a197022b5858",
     ],
     condition: "used",
-    status: "rented",
+    status: "available",
     location: "Abuja",
     category: "rent",
     type: "self-contain",

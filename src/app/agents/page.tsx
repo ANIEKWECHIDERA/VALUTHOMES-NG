@@ -1,11 +1,14 @@
+// app/find-an-agent/page.tsx
 "use client";
 
 import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { FaStar, FaMapMarkerAlt, FaPhone } from "react-icons/fa";
+import { FaStar, FaMapMarkerAlt, FaPhone, FaCheckCircle } from "react-icons/fa";
 import { useGlobalData } from "../context/GlobalDataContext";
+import { usePagination } from "@/hooks/usePagination";
+import Pagination from "@/components/properties/Pagination"; // Assuming this is your Pagination component
 
 export default function FindAnAgent() {
   const { agents } = useGlobalData();
@@ -13,6 +16,7 @@ export default function FindAnAgent() {
   const [locationFilter, setLocationFilter] = useState("all");
   const [filteredAgents, setFilteredAgents] = useState(agents);
 
+  // Filter agents based on search term and location
   useEffect(() => {
     const filtered = agents.filter((agent) => {
       const matchesSearch =
@@ -23,7 +27,15 @@ export default function FindAnAgent() {
       return matchesSearch && matchesLocation;
     });
     setFilteredAgents(filtered);
-  }, [searchTerm, locationFilter]);
+  }, [searchTerm, locationFilter, agents]);
+
+  // Use pagination hook with 7 agents per page
+  const {
+    currentPage,
+    totalPages,
+    paginatedData: paginatedAgents,
+    handlePageChange,
+  } = usePagination(filteredAgents, 7);
 
   return (
     <main className="bg-soft-gray py-12 px-4 sm:px-6 lg:px-8">
@@ -66,7 +78,7 @@ export default function FindAnAgent() {
 
         {/* Agent Listings */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredAgents.map((agent) => (
+          {paginatedAgents.map((agent) => (
             <Card
               key={agent.id}
               className="bg-white border-none rounded-lg overflow-hidden"
@@ -79,9 +91,17 @@ export default function FindAnAgent() {
                   loading="lazy"
                 />
                 <div className="p-4">
-                  <h3 className="text-lg font-semibold text-deep-navy-blue mb-2">
-                    {agent.name}
-                  </h3>
+                  <div className="flex items-center mb-2">
+                    <h3 className="text-lg font-semibold text-deep-navy-blue">
+                      {agent.name}
+                    </h3>
+                    {agent.isVerified && (
+                      <FaCheckCircle
+                        className="ml-2 text-emerald-green"
+                        title="Verified Agent"
+                      />
+                    )}
+                  </div>
                   <div className="flex items-center text-sm text-gray-600 mb-2">
                     <FaMapMarkerAlt className="text-rich-gold mr-1" />
                     <span>{agent.location}</span>
@@ -114,6 +134,17 @@ export default function FindAnAgent() {
             </Card>
           ))}
         </div>
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="mt-8">
+            <Pagination
+              totalPages={totalPages}
+              currentPage={currentPage}
+              handlePageChange={handlePageChange}
+            />
+          </div>
+        )}
       </section>
     </main>
   );
