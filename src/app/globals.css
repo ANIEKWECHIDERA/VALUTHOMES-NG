@@ -120,7 +120,7 @@
 
 @layer base {
   * {
-    border: var(--border);
+    /* border: var(--border); */
     outline: var(--ring) / 50;
     /* border: 0.5px solid red; */
   }
