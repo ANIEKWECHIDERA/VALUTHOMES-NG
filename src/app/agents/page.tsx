@@ -9,6 +9,7 @@ import { FaStar, FaMapMarkerAlt, FaPhone, FaCheckCircle } from "react-icons/fa";
 import { useGlobalData } from "../context/GlobalDataContext";
 import { usePagination } from "@/hooks/usePagination";
 import Pagination from "@/components/properties/Pagination"; // Assuming this is your Pagination component
+import Link from "next/link";
 
 export default function FindAnAgent() {
   const { agents } = useGlobalData();
@@ -91,10 +92,12 @@ export default function FindAnAgent() {
                   loading="lazy"
                 />
                 <div className="p-4">
-                  <div className="flex items-center mb-2">
-                    <h3 className="text-lg font-semibold text-deep-navy-blue">
-                      {agent.name}
-                    </h3>
+                  <div className="flex items-center mb-2 ">
+                    <Link href={`/agents/${agent.id}`}>
+                      <h3 className="text-lg font-semibold text-deep-navy-blue hover:underline">
+                        {agent.name}
+                      </h3>
+                    </Link>
                     {agent.isVerified && (
                       <FaCheckCircle
                         className="ml-2 text-emerald-green"
@@ -126,9 +129,11 @@ export default function FindAnAgent() {
                   <p className="text-sm text-gray-600 mb-2">
                     Specialties: {agent.specialties.join(", ")}
                   </p>
-                  <Button className="w-full bg-emerald-green text-white hover:bg-green-600 font-poppins flex items-center justify-center">
-                    <FaPhone className="mr-2" /> Contact
-                  </Button>
+                  <Link href={`/agents/${agent.id}`}>
+                    <Button className="w-full bg-emerald-green text-white hover:bg-green-600 font-poppins flex items-center justify-center">
+                      <FaPhone className="mr-2" /> Contact
+                    </Button>
+                  </Link>
                 </div>
               </CardContent>
             </Card>

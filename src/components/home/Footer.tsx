@@ -59,6 +59,11 @@ const Footer = () => {
                   Sell Your Property
                 </Link>
               </li>
+              <li>
+                <Link href="/rent-property" className="hover:text-rich-gold">
+                  Rent Your Property
+                </Link>
+              </li>
             </ul>
           </div>
 

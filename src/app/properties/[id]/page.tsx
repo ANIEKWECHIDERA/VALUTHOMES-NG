@@ -122,7 +122,7 @@ export default function PropertyDetails({ params, searchParams }: PageProps) {
   }
 
   return (
-    <main className="bg-soft-gray pb-12 px-4 sm:px-6 lg:px-8">
+    <main className="bg-soft-gray pb-4 md:pb-12 px-4 sm:px-6 lg:px-8">
       <section className="max-w-7xl mx-auto">
         <div className="mb-6 h-auto sticky top-16 z-20">
           <Breadcrumb items={breadcrumbItems} />

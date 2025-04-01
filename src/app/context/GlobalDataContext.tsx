@@ -49,11 +49,21 @@ type Agent = {
   rating: number;
   reviewCount: number;
   specialties: string[];
-  properties: Property[];
+  properties: (typeof mockProperties)[number][];
   address?: string;
-  image: string;
-  phone?: string; // Optional phone number
-  isVerified?: boolean; // Optional verification status
+  image?: string;
+  phone?: string;
+  isVerified: boolean;
+  email?: string;
+  about?: string;
+  propertiesListed?: number;
+  propertiesSold?: number;
+  propertiesRented?: number;
+  isOnline: boolean;
+  testimonials?: { clientName: string; text: string }[];
+  preferredContactMethod?: "chat" | "email" | "phone";
+  businessHours?: string;
+  socialMedia?: { platform: string; url: string }[];
 };
 
 type successStories = {
