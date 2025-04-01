@@ -102,8 +102,8 @@ export default function PropertyDetails({ params, searchParams }: PageProps) {
 
   if (!property) {
     return (
-      <main className="bg-soft-gray py-12 px-4 sm:px-6 lg:px-8">
-        <section className="max-w-7xl mx-auto text-center">
+      <main className="bg-soft-gray ">
+        <section className="max-w-7xl mx-auto pb-3 lg:pb-12 px-4 sm:px-6 lg:px-8 h-auto">
           <h1 className="text-4xl font-bold text-deep-navy-blue mb-4">
             Property Not Found
           </h1>

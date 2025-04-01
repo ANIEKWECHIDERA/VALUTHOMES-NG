@@ -10,6 +10,7 @@ import { useGlobalData } from "../context/GlobalDataContext";
 import { usePagination } from "@/hooks/usePagination";
 import Pagination from "@/components/properties/Pagination"; // Assuming this is your Pagination component
 import Link from "next/link";
+import Breadcrumb from "@/components/properties/Breadcrumb";
 
 export default function FindAnAgent() {
   const { agents } = useGlobalData();
@@ -39,8 +40,17 @@ export default function FindAnAgent() {
   } = usePagination(filteredAgents, 7);
 
   return (
-    <main className="bg-soft-gray py-12 px-4 sm:px-6 lg:px-8">
-      <section className="max-w-7xl mx-auto">
+    <main className="bg-soft-gray">
+      <section className="max-w-7xl mx-auto pb-3 lg:pb-12 px-4 sm:px-6 lg:px-8 h-auto">
+        <div className="mb-6 h-auto sticky top-16 z-20">
+          <Breadcrumb
+            items={[
+              { label: "Home", href: "/" },
+              { label: "Agents", href: "/agents" },
+              // Current page, no href
+            ]}
+          />
+        </div>
         {/* Hero Section */}
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-deep-navy-blue mb-4">

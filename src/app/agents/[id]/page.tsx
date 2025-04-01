@@ -61,8 +61,8 @@ export default function AgentDetails({ params }: AgentDetailsProps) {
     .slice(0, 4);
 
   return (
-    <main className="bg-soft-gray pb-3 md:pb-12 px-4 sm:px-6 lg:px-8">
-      <section className="max-w-4xl mx-auto">
+    <main className="bg-soft-gray ">
+      <section className="max-w-7xl mx-auto pb-3 lg:pb-12 px-4 sm:px-6 lg:px-8 h-auto">
         <div className="mb-8 sticky top-16 z-20 ">
           <Breadcrumb
             items={[
@@ -94,7 +94,7 @@ export default function AgentDetails({ params }: AgentDetailsProps) {
               </p>
             </div>
             <div className="text-center lg:text-left flex-1">
-              <h1 className="text-2xl font-bold text-deep-navy-blue flex items-center xl:justify-start justify-center gap-2 mb-2">
+              <h1 className="text-2xl font-bold text-deep-navy-blue flex items-center lg:justify-start justify-center gap-2 mb-2">
                 {agent.name}
                 {agent.isVerified && (
                   <FaCheckCircle
@@ -149,7 +149,7 @@ export default function AgentDetails({ params }: AgentDetailsProps) {
               ))}
             </div>
             <div className="text-center h-full lg:text-right w-full text-gray-500 align-middle items-center space-y-5">
-              <div className="flex justify-center xl:justify-start text-2xl gap-7">
+              <div className="flex justify-center xl:justify-between text-2xl gap-7">
                 <p>
                   <strong>{agent.propertiesListed}</strong>{" "}
                   <p className="text-xs">Properties Listed</p>
